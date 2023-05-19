@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zkzkdh451.mapper.BoardMapper">
+	
+	<insert id="insert">
+		INSERT INTO lark_board (title, content, userid)
+		VALUES (#{title}, #{content}, #{userid})
+	</insert>
+	
+	<select id="getList" resultType="com.zkzkdh451.domain.BoardVO">
+		<![CDATA[
+			SELECT * 
+			FROM lark_board 
+			WHERE bno > 0 
+			ORDER BY bno DESC
+		]]>
+	</select>
+	
+</mapper>
