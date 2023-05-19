@@ -24,17 +24,17 @@
 						cellspacing="0">
 						<colgroup>
 							<col style="width: 80px;" />
-							<col style="width: 150px;" />
 							<col style="width: auto;" />
-							<col style="width: 250px;" />
+							<col style="width: 200px;" />
+							<col style="width: 150px;" />
 							<col style="width: 75px;" />
 						</colgroup>
 						<thead>
 							<tr>
 								<th>글번호</th>
-								<th>작성자</th>
 								<th>제목</th>
 								<th>등록일시</th>
+								<th>작성자</th>
 								<th>조회수</th>
 							</tr>
 						</thead>
@@ -43,11 +43,11 @@
 							<c:forEach var="board" items="${list}">
 								<tr>
 									<td>${board.bno }</td>
-									<td>${board.userid }</td>
 									<td><a href="${board.bno}" class="getBoard">${board.title }</a>
 										<span class="badge badge-primary">${board.replyCnt }</span></td>
 									<td><fmt:formatDate value="${board.regDate }"
 											pattern="yyyy-MM-dd HH:mm" /></td>
+									<td>${board.userid }</td>
 									<td>${board.hit }</td>
 								</tr>
 								<c:set var="cnt" value="${cnt+1}" />
@@ -66,20 +66,20 @@
 						<div class="col-md-4"></div>
 						<ul class="pagination m-0">
 							<c:if test="${pageMaker.prev }">
-								<li style="margin-right: 10px;"><a href="${pageMaker.startPage-1}"
-									aria-label="Previous"> <span aria-hidden="true"><i
-											class="fa fa-chevron-left"></i></span>
-								</a></li>
+								<li class="paginate_button page-item previous">
+									<a href="${pageMaker.startPage-1}" aria-control="dataTable" class="page-link">이전</a>
+								</li>
 							</c:if>
 							<c:forEach var="num" begin="${pageMaker.startPage}"
 								end="${pageMaker.endPage}">
-								<li style="margin-right: 10px;"><a role="button" 
-									class="${pageMaker.cri.pageNum == num?"active":"" } btn btn-primary btn-sm" href="${num}">${num}</a></li>
+								<li class="paginate_button page-item ${pageMaker.cri.pageNum == num?"active":"" }">
+									<a class="page-link" href="${num}">${num}</a>
+								</li>
 							</c:forEach>
 							<c:if test="${pageMaker.next }">
-								<li><a href="${pageMaker.endPage+1}" aria-label="Next">
-										<span aria-hidden="true"><i class="fa fa-chevron-right"></i></span>
-								</a></li>
+								<li class="paginate_button page-item next">
+									<a href="${pageMaker.endPage+1}" aria-control="dataTable" class="page-link">다음</a>
+								</li>
 							</c:if>
 						</ul>
 					</nav>
@@ -102,7 +102,7 @@
 							</select>
 							<input type="text" name="keyword" class="form-control col-md-8" value="${pageMaker.cri.keyword}">
 						<div class="form-group">
-							<button class="btn btn-secondary">Search</button>
+							<button class="btn btn-secondary">검색</button>
 						</div>
 					</form>
 				</div>

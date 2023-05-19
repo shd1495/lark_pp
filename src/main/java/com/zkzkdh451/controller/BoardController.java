@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.zkzkdh451.domain.BoardVO;
 import com.zkzkdh451.domain.Criteria;
@@ -55,6 +56,22 @@ public class BoardController {
 	@GetMapping("/get")
 	public void get(@RequestParam("bno") Long bno, @ModelAttribute("cri") Criteria cri, Model model) {
 		model.addAttribute("board", service.get(bno));
+	}
+	
+	@GetMapping("/modify")
+	public void modify(@RequestParam("bno") Long bno, @ModelAttribute("cri") Criteria cri, Model model) {
+		model.addAttribute("board", service.get(bno));
+	}
+	
+	@PostMapping("/modify")
+	public String modify(BoardVO board, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {
+		
+		if(service.modify(board)) {
+			rttr.addFlashAttribute("result", "success");
+		}	
+
+		
+		return "redirect:/board/list"+cri.getListLink();
 	}
 	
 }

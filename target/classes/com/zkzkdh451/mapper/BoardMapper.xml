@@ -57,4 +57,12 @@ PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
 		SELECT * FROM lark_board WHERE bno = #{bno}
 	</select>
 	
+	<update id="updateHit">
+		update lark_board set hit = hit + 1 where bno = #{bno}
+	</update>
+	
+	<update id="update">
+		UPDATE lark_board SET title=#{title}, content=#{content}, updatedate = now()
+		WHERE bno=#{bno}		
+	</update>
 </mapper>

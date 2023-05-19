@@ -29,12 +29,23 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public BoardVO get(Long bno) {
+		
+		mapper.updateHit(bno);
+		
 		return mapper.get(bno);
 	}
 
 	@Override
 	public int getTotal(Criteria cri) {
 		return mapper.getTotalCount(cri);
+	}
+	
+	@Override
+	public boolean modify(BoardVO board) {
+		
+		boolean modifyResult = mapper.update(board);
+		
+		return modifyResult;
 	}
 
 }
