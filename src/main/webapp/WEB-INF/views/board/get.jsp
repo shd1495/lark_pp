@@ -19,12 +19,8 @@
 					<input type="hidden" name="type" value="${cri.type }">
 					<input type="hidden" name="keyword" value="${cri.keyword }">
 					<input type="hidden" name="bno" value="${board.bno}">
-					<sec:authentication property="principal" var="pinfo" />
-					<sec:authorize access="isAuthenticated()">
-						<input type="hidden" id="userid" name="userid" value="${pinfo.username }"/>
-					</sec:authorize>
 					<div>
-						<label class="form-label col-md-9">제목</label>
+						<label class="form-label col-md-8">제목</label>
 						<label class="form-label col-md-3">작성자 : ${board.userid}</label>
 						<input type="text" class="form-control" id="title" name="title" placeholder="제목" value="${board.title}" readonly/>
 					</div>
@@ -37,7 +33,12 @@
 					</div>
 					<hr>
 					<div class="form-group text-right">
-						<button class="btn btn-primary" data-oper="modify">수정</button>
+						<sec:authentication property="principal" var="pinfo"/>
+						<sec:authorize access="isAuthenticated()">
+							<c:if test="${pinfo.username eq  board.userid}">
+								<button class="btn btn-primary" data-oper="modify">수정</button>
+							</c:if>
+						</sec:authorize>
 						<button class="btn btn-secondary" data-oper="list">목록</button>
 					</div>
 				</form>

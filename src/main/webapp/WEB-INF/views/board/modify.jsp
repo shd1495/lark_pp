@@ -14,16 +14,12 @@
 			</div>
 			<div class="card-body">
 				<form role="form" id="actionForm" class="form-group" action="/board/modify" method="post">
-					<input type="hidden" name="pageNum" value="${cri.pageNum }">
-					<input type="hidden" name="amount" value="${cri.amount }">
-					<input type="hidden" name="type" value="${cri.type }">
-					<input type="hidden" name="keyword" value="${cri.keyword }">
-					<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }" />
-					<input type="hidden" name="bno" value="${board.bno}">
-					<sec:authentication property="principal" var="pinfo" />
-					<sec:authorize access="isAuthenticated()">
-						<input type="hidden" id="userid" name="userid" value="${pinfo.username }"/>
-					</sec:authorize>
+					<input type="hidden" name="pageNum" value="${cri.pageNum }"> <!-- 페이지 번호 -->
+					<input type="hidden" name="amount" value="${cri.amount }"> <!-- 페이지 표시 글 수 -->
+					<input type="hidden" name="type" value="${cri.type }"> <!-- 검색 설정 값 -->
+					<input type="hidden" name="keyword" value="${cri.keyword }"> <!-- 검색어 -->
+					<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }" /> <!-- csrf -->
+					<input type="hidden" name="bno" value="${board.bno}"> <!-- 글 번호 -->
 					<div>
 						<label class="form-label col-md-8">제목</label>
 						<label class="form-label col-md-3">작성자 : ${board.userid}</label>
@@ -56,11 +52,13 @@ $(document).ready(function(){
 	
 	let formObj = $("form[role=form]");
 	
+	//수정, 삭제, 목록 버튼 눌렀을 시
 	$("button[type=submit]").on("click", function(event){
 		event.preventDefault();
 		
 		let operation = $(this).data('oper');
 		
+		//수정 버튼 눌렀을 시 수정 데이터 전송 및 첨부파일 
 		if(operation === 'modify'){
 			let str = "";
 			
@@ -76,13 +74,15 @@ $(document).ready(function(){
 			});
 			
 			formObj.append(str);
-						
+			
+		//삭제 버튼 눌렀을 시 삭제 확인 메시지 출력 후 삭제				
 		} else if(operation === 'remove'){
 			if(confirm("정말로 삭제하시겠습니까?")){
 				$("#actionForm").attr("action", "/board/remove");
 			} else {
 				return false;
 			}
+		//목록 버튼 눌렀을 시 페이징 값과 함께 목록으로 이동
 		} else if(operation === 'list'){
 			$("#actionForm").attr("action", "/board/list");
 			$("#actionForm").attr("method", "get");
