@@ -70,8 +70,17 @@ public class BoardController {
 			rttr.addFlashAttribute("result", "success");
 		}	
 
-		
 		return "redirect:/board/list"+cri.getListLink();
 	}
 	
+	@PostMapping("/remove")
+	public String remove(BoardVO board, @ModelAttribute("cri") Criteria cri, 
+								RedirectAttributes rttr) {
+		
+		if(service.remove(board)) { 
+			rttr.addFlashAttribute("result", "success");
+		};
+		
+		return "redirect:/board/list"+cri.getListLink();
+	}
 }

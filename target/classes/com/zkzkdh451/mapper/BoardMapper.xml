@@ -65,4 +65,9 @@ PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
 		UPDATE lark_board SET title=#{title}, content=#{content}, updatedate = now()
 		WHERE bno=#{bno}		
 	</update>
+	
+	<delete id="delete">
+		DELETE FROM lark_board WHERE bno = #{bno}
+	</delete>
+	
 </mapper>

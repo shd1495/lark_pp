@@ -13,13 +13,12 @@
 				<h6 class="m-0 font-weight-bold text-primary">자유게시판 > ${board.bno}</h6>
 			</div>
 			<div class="card-body">
-				<form class="form-group" action="/board/write" method="post">
+				<form role="form" id="actionForm" class="form-group" action="/board/modify">
 					<input type="hidden" name="pageNum" value="${cri.pageNum }">
 					<input type="hidden" name="amount" value="${cri.amount }">
 					<input type="hidden" name="type" value="${cri.type }">
 					<input type="hidden" name="keyword" value="${cri.keyword }">
-					<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }" />
-					<input type="hidden" name="keyword" value="${board.bno}">
+					<input type="hidden" name="bno" value="${board.bno}">
 					<sec:authentication property="principal" var="pinfo" />
 					<sec:authorize access="isAuthenticated()">
 						<input type="hidden" id="userid" name="userid" value="${pinfo.username }"/>
@@ -38,8 +37,8 @@
 					</div>
 					<hr>
 					<div class="form-group text-right">
-						<a href="/board/modify${cri.listLink }&bno=${board.bno}" class="btn btn-primary">수정</a>
-						<a href="/board/list${cri.listLink }" class="btn btn-secondary">목록</a>
+						<button class="btn btn-primary" data-oper="modify">수정</button>
+						<button class="btn btn-secondary" data-oper="list">목록</button>
 					</div>
 				</form>
 			</div>
@@ -50,15 +49,5 @@
 
 </div>
 <!-- End of Main Content -->
-<script>
-$(document).ready(function(){
-	var csrfHeaderName = "${_csrf.headerName}";
-	var csrfTokenValue = "${_csrf.token}";
 
-	$(document).ajaxSend(function(e, xhr, options){
-		xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
-	});
-	
-});
-</script>
 <%@ include file="../../include/footer.jsp"%>

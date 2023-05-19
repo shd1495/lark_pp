@@ -47,5 +47,11 @@ public class BoardServiceImpl implements BoardService {
 		
 		return modifyResult;
 	}
+	
+	@Override
+	public boolean remove(BoardVO board) {
+		
+		return mapper.delete(board.getBno());//해당 글 삭제
+	}
 
 }

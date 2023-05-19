@@ -22,4 +22,6 @@ public interface BoardService {
 	//글 수정
 	public boolean modify(BoardVO vo);
 
+	public boolean remove(BoardVO vo);
+
 }
