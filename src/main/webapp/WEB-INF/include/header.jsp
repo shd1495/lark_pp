@@ -47,9 +47,9 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="/dashboard">
+                <a class="nav-link" href="/">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>자유게시판</span></a>
+                    <span>메인 화면</span></a>
             </li>
 
             <!-- Divider -->
@@ -57,7 +57,7 @@
 
             <!-- Heading -->
             <div class="sidebar-heading">
-                interface
+                화면 구성
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
@@ -72,6 +72,7 @@
                         <h6 class="collapse-header">목록:</h6>
                         <a class="collapse-item" href="/users/login">로그인</a>
                         <a class="collapse-item" href="/users/register">회원가입</a>
+                        <a class="collapse-item" href="/board/list">자유게시판</a>
                     </div>
                 </div>
             </li>
@@ -81,7 +82,7 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
                     <i class="fas fa-fw fa-wrench"></i>
-                    <span>도구</span>
+                    <span>정보</span>
                 </a>
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
@@ -100,7 +101,7 @@
 
             <!-- Heading -->
             <div class="sidebar-heading">
-                Addons
+                유틸리티
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
@@ -108,16 +109,16 @@
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="charts.html">
+                <a class="nav-link" href="#">
                     <i class="fas fa-fw fa-chart-area"></i>
-                    <span>차트</span></a>
+                    <span>어빌리티스톤</span></a>
             </li>
 
             <!-- Nav Item - Tables -->
             <li class="nav-item">
-                <a class="nav-link" href="tables.html">
+                <a class="nav-link" href="#">
                     <i class="fas fa-fw fa-table"></i>
-                    <span>테이블</span></a>
+                    <span>현재 시세</span></a>
             </li>
 
             <!-- Divider -->

@@ -58,13 +58,117 @@
 						</tbody>
 					</table>
 				</div>
+				<div class="text-center" style="margin-top:27px;">					
+						<!-- search results navigation -->
+						<nav class="search-results-navigation">
+							<ul class="pagination m-0">
+								<c:if test="${pageMaker.prev }">
+								<li>
+									<a href="${pageMaker.startPage-1}" aria-label="Previous">
+									<span aria-hidden="true"><i class="fa fa-chevron-left"></i></span>
+									</a>
+								</li>
+								</c:if>
+								<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
+								<li class="${pageMaker.cri.pageNum == num?"active":"" }"><a href="${num}">${num}</a></li>
+								</c:forEach>
+								<c:if test="${pageMaker.next }">
+								<li>
+									<a href="${pageMaker.endPage+1}" aria-label="Next">
+									<span aria-hidden="true"><i class="fa fa-chevron-right"></i></span>
+									</a>
+								</li>
+								</c:if>
+							</ul>
+						</nav><!-- END search-results-navigation -->
+					</div>
+					<div class="text-center" style="margin-top:27px;">					
+						<form id="searchForm" class="form-inline">
+							<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
+							<input type="hidden" name="amount" value="${pageMaker.cri.amount}">
+							<div class="form-group">
+							
+							<select name="type" class="form-control">
+								<option value="">전체</option>
+								<option value="T" ${pageMaker.cri.type eq "T"?"selected":"" }>제목</option>
+								<option value="C" ${pageMaker.cri.type eq "C"?"selected":"" }>내용</option>
+								<option value="W" ${pageMaker.cri.type eq "W"?"selected":"" }>작성자</option>
+								<option value="TC" ${pageMaker.cri.type eq "TC"?"selected":"" }>제목OR내용</option>
+								<option value="TW" ${pageMaker.cri.type eq "TW"?"selected":"" }>제목OR작성자</option>
+								<option value="TWC" ${pageMaker.cri.type eq "TWC"?"selected":"" }>제목OR내용OR작성자</option>
+							</select>
+							<input type="text" name="keyword" class="form-control" value="${pageMaker.cri.keyword}">
+							</div>
+							<div class="form-group">
+							<button class="btn btn-default btn-sm">Search</button>
+							</div>
+						</form>
+					</div>
 			</div>
 		</div>
 
 	</div>
 	<!-- /.container-fluid -->
-
 </div>
 <!-- End of Main Content -->
+<form id="actionForm">
+	<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
+	<input type="hidden" name="amount" value="${pageMaker.cri.amount}">
+	<input type="hidden" name="type" value="${pageMaker.cri.type}">
+	<input type="hidden" name="keyword" value="${pageMaker.cri.keyword}">
+</form>
 
+<script>
+$(document).ready(function(){
+	
+	//페이징에 a태그를 클릭했을때
+	$(".pagination a").on("click", function(event){
+		event.preventDefault();
+		$("input[name=pageNum]").val($(this).attr("href"));
+		$("#actionForm").attr("action","/board/list");
+		$("#actionForm input[name=bno]").remove();
+		$("#actionForm").submit();
+	});
+	
+	//검색
+	$("#searchForm button").on("click", function(event){
+		
+		if($("#searchForm").find("option:selected").val() == ''){
+			return true;
+		}
+
+		event.preventDefault();
+		
+		if(!$("#searchForm").find("input[name=keyword]").val()){
+			alert("키워드를 입력하세요");
+			return false;
+		}
+		
+		if(!$("#searchForm").find("option:selected").val()){
+			alert("검색종류를 선택하세요");
+			return false;
+		}
+		
+		$("#searchForm").find("input[name=pageNum]").val(1);
+		
+		$("#searchForm").submit();
+		
+	});
+	
+	//제목 클릭했을때 actionform - hidden에 bno 값 추가 후 전송 및 삭제
+	$(".getBoard").on("click", function(event){
+		event.preventDefault();
+		
+		$("#actionForm input[name=bno]").remove();
+		$("#actionForm").append("<input type='hidden' name='bno' value='"+$(this).attr("href")+"'>");
+		$("#actionForm").attr("action","/board/get");
+		
+		$("#actionForm").submit();
+		
+	});
+	
+	
+	
+});
+</script>
 <%@ include file="../../include/footer.jsp"%>

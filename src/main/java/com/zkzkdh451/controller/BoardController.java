@@ -6,8 +6,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.zkzkdh451.domain.BoardVO;
+import com.zkzkdh451.domain.Criteria;
+import com.zkzkdh451.domain.PageDTO;
 import com.zkzkdh451.service.BoardService;
 
 import lombok.AllArgsConstructor;
@@ -21,9 +24,15 @@ public class BoardController {
 	
 	private BoardService service;
 	
+	
+	
 	@GetMapping("/list")
-	public void boardList (Model model) {
-		model.addAttribute("list", service.getList());
+	public void list(Criteria cri, Model model) {
+		model.addAttribute("list", service.getList(cri));
+		
+		int total = service.getTotal(cri);
+		
+		model.addAttribute("pageMaker", new PageDTO(cri, total));
 	}
 	
 	
@@ -41,4 +50,10 @@ public class BoardController {
 		
 		return "redirect:/board/list";
 	}
+	
+	@GetMapping("/get")
+	public void get(@RequestParam("bno") Long bno) {
+		service.get(bno);
+	}
+	
 }
