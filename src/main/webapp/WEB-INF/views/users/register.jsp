@@ -52,28 +52,23 @@
                             <div class="text-center">
                                 <h1 class="h4 text-gray-900 mb-4">회원가입</h1>
                             </div>
-                            <form id="form" class="user" action="/users/register" method="post">
+                            <form id="form" class="user text-center" action="/users/register" method="post">
 								<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }" />
-                                <div><small id="msg"></small></div>
+								<input type="hidden" name="auth" id="role1" value="USER">
+                               	<small id="msg"></small>
                                 <div id="id" class="form-group">
                                     <input type="text" class="form-control form-control-user col-md-9" id="userid"
                                         name="userid" placeholder="ID" required="required">
-                                        <button type="button" id="idchkBtn" class="btn btn-user btn-warning col-md-3" >중복 체크</button>
+                                    <button type="button" id="idchkBtn" class="btn btn-user btn-warning col-md-3" >중복 체크</button>
+                                </div>
+                               	<small id="msg2"></small>
+                               	<div class="form-group">
+                                    <input type="password" class="form-control form-control-user"
+                                        id="userpw" name="userpw" placeholder="Password" required="required">
                                 </div>
                                 <div class="form-group">
                                     <input type="text" class="form-control form-control-user" id="userName"
                                         name="userName" placeholder="USERNAME" required="required">
-                                </div>
-                                <div class="form-group">
-                                    <input type="password" class="form-control form-control-user"
-                                        id="userpw" name="userpw" placeholder="Password" required="required">
-                                </div>
-                                 <div class="form-group">
-                                 	<span>Auth :</span>
-                                 	<input type="radio" name="auth" id="role1" value="USER">
-                                 	<label for="role1">USER</label>
-                                 	<input type="radio" name="auth" id="role2" value="ADMIN">
-                                 	<label for="role2">ADMIN</label>
                                 </div>
                                 <button id="btnSubmit" type="submit" class="btn btn-primary btn-user btn-block">
                                     계정 생성
@@ -111,7 +106,7 @@ $(document).ready(function(){
 		xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
 	});
 	
-	idchk = 0;
+	idchk = 2;
 
 	$("#idchkBtn").on("click", function(){
 		let userid = $("#userid").val();
@@ -136,10 +131,47 @@ $(document).ready(function(){
 		});
 	});
 	
-	$("#btnSubmit").on("click", function(e){
-		e.preventDefault();
-		
-		if(!(idchk == 1)){
+	$('#userpw').on("keyup", function(){
+		if($(this).val().length < 6 || $(this).val().length > 12){
+			$('#msg2').html("6~12자 사이로 입력하세요.");
+			$('#msg2').css("color", "#f00").css("z-index",1);
+		} else {
+			let regPass = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{6,12}$/;
+			if (!regPass.test($(this).val())) {
+				$('#msg2').html("영문자 숫자 특수문자를 포함하세요.");
+				$('#msg2').css("color", "#f00").css("z-index",1);
+			} else {
+				$('#msg2').html("");
+			}
+		}
+	});
+	$('#userid').on("keyup", function(){
+		if($(this).val().length < 6 || $(this).val().length > 12){
+			$('#msg').html("6~12자 사이로 입력하세요.");
+			$('#msg').css("color", "#f00").css("z-index",1);
+		} else {
+			$('#msg').html("");
+		}
+	});
+	$('#btnSubmit').on('click', function(event){
+		event.preventDefault();
+		if($('#userid').val() == '' || $('#userid').val().length < 6 || $('#userid').val().length > 12 || idchk == 1 ){
+			alert("양식에 맞는 아이디를 입력하세요.");
+			$('#userid').focus();
+			return;
+		}
+		let regPass = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{6,12}$/;
+		if($('#userpw').val() == '' || $('#userpw').val().length < 6 || $('#userpw').val().length > 12  || !regPass.test($('#userpw').val()) == true){
+			alert("양식에 맞는 비밀번호를 입력하세요.");
+			$('#userpw').focus();
+			return;
+		}
+		if($('#userName').val() == '' || $('#userName').val().length <= 2){
+			alert("이름을 입력하세요..");
+			$('#name').focus();
+			return;
+		}
+		if(idchk == 0){
 			$("#form").submit();
 		} else {
 			alert("중복 체크 확인");
