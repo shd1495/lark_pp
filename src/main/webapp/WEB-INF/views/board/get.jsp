@@ -13,7 +13,7 @@
 				<h6 class="m-0 font-weight-bold text-primary">자유게시판 > ${board.bno}</h6>
 			</div>
 			<div class="card-body">
-				<form role="form" id="actionForm" class="form-group" action="/board/modify">
+				<form role="form" id="actionForm" class="form-group" action="">
 					<input type="hidden" name="pageNum" value="${cri.pageNum }">
 					<input type="hidden" name="amount" value="${cri.amount }">
 					<input type="hidden" name="type" value="${cri.type }">
@@ -36,10 +36,10 @@
 						<sec:authentication property="principal" var="pinfo"/>
 						<sec:authorize access="isAuthenticated()">
 							<c:if test="${pinfo.username eq  board.userid}">
-								<button class="btn btn-primary" data-oper="modify">수정</button>
+								<button type="submit" class="btn btn-primary" data-oper="modify">수정</button>
 							</c:if>
 						</sec:authorize>
-						<button class="btn btn-secondary" data-oper="list">목록</button>
+						<button type="submit" class="btn btn-secondary" data-oper="list">목록</button>
 					</div>
 				</form>
 			</div>
@@ -50,5 +50,61 @@
 
 </div>
 <!-- End of Main Content -->
+<script>
+$(document).ready(function(){
+	
+	let formObj = $("form[role=form]");
+	
+	//수정, 삭제, 목록 버튼 눌렀을 시
+	$("button[type=submit]").on("click", function(event){
+		event.preventDefault();
+		
+		let operation = $(this).data('oper');
+		
+		//수정 버튼 눌렀을 시 수정 데이터 전송 및 첨부파일 
+		if(operation === 'modify'){
+			let str = "";
+			
+			$(".uploadResult ul li").each(function(i, obj){
+				let jobj = $(obj);
+				
+				let type = (jobj.data('type') == true)?"1":"0";
 
+				str += "<input type='hidden' name='attachList["+i+"].fileName' value='"+jobj.data('filename')+"'>";
+				str += "<input type='hidden' name='attachList["+i+"].uuid' value='"+jobj.data('uuid')+"'>";
+				str += "<input type='hidden' name='attachList["+i+"].uploadPath' value='"+jobj.data('path')+"'>";
+				str += "<input type='hidden' name='attachList["+i+"].fileType' value='"+type+"'>";
+			});
+			
+			formObj.append(str);
+			
+		//삭제 버튼 눌렀을 시 삭제 확인 메시지 출력 후 삭제				
+		} else if(operation === 'remove'){
+			if(confirm("정말로 삭제하시겠습니까?")){
+				$("#actionForm").attr("action", "/board/remove");
+			} else {
+				return false;
+			}
+		//목록 버튼 눌렀을 시 페이징 값과 함께 목록으로 이동
+		} else if(operation === 'list'){
+			$("#actionForm").attr("action", "/board/list");
+			$("#actionForm").attr("method", "get");
+			
+			let pageNumTag = $("input[name=pageNum]").clone();
+			let amountTag = $("input[name=amount]").clone();
+			let typeTag = $("input[name=type]").clone();
+			let keywordTag = $("input[name=keyword]").clone();
+			
+			$("#actionForm").empty();
+			$("#actionForm").append(pageNumTag);
+			$("#actionForm").append(amountTag);
+			$("#actionForm").append(typeTag);
+			$("#actionForm").append(keywordTag);
+		}
+		
+		formObj.submit();
+	});
+	
+});
+</script>
 <%@ include file="../../include/footer.jsp"%>
