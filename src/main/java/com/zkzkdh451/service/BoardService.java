@@ -2,6 +2,7 @@ package com.zkzkdh451.service;
 
 import java.util.List;
 
+import com.zkzkdh451.domain.BoardAttachVO;
 import com.zkzkdh451.domain.BoardVO;
 import com.zkzkdh451.domain.Criteria;
 
@@ -23,5 +24,7 @@ public interface BoardService {
 	public boolean modify(BoardVO vo);
 
 	public boolean remove(BoardVO vo);
+	
+	public List<BoardAttachVO> getAttachList(BoardVO vo);
 
 }

@@ -5,6 +5,32 @@
 	prefix="sec"%>
 <%@ include file="../../include/header.jsp"%>
 
+<style>
+.bigPictureWrapper {
+position:absolute;
+display: none;
+justify-content: center;
+align-items: center;
+top:0%;
+width:100%;
+height:100%;
+background-color: gray;
+z-index:100;
+background: rgba(255,255,255, 0.5);
+}
+
+.bigPicture{
+position: relative;
+display: flex;
+justify-content: center;
+align-items: center;
+
+}
+.bigPicture img {
+width: 600px;
+}
+</style>
+
 <!-- Begin Page Content -->
 <div class="container-fluid">
 	<!-- Content Row -->
@@ -50,6 +76,18 @@
 			</div>
 		</div>
 	</div>
+	<div class="row">
+			<div class="card shadow col-md-12">
+				<div class="card-header py-3">파일첨부</div>
+				<div class="card-body">
+					<div class="uploadResult">
+						<ul>
+						
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
 	<div class="row">
 		<div class="card shadow col-md-12">
 			<div>
@@ -123,6 +161,11 @@
 </div>
 <!-- modal fade -->
 <!-- 모달 끝 -->
+<!-- 빅그림 -->
+<div class="bigPictureWrapper">
+	<div class="bigPicture">
+	</div>
+</div>
 <script src="../../resources/js/reply.js"></script>
 <script>
 $(document).ready(function() {
