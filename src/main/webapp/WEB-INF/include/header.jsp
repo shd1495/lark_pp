@@ -231,9 +231,9 @@
 	                                </a>
                                 </sec:authorize>
                                 <sec:authorize access="isAuthenticated()">
-	                                <a class="dropdown-item" href="/users/logout" >
+	                                <button id="logout" type="button" class="dropdown-item">
 	                                   <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>로그아웃
-	                                </a>
+	                                </button>
                                 </sec:authorize>
                             </div>
                         </li>

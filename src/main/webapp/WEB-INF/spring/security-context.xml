@@ -22,7 +22,9 @@
 	<!-- authentication-success-handler-ref 로그인 후 권한에 따라 특정 페이지로 이동 -->
 	<!-- <security:form-login login-page="/customLogin" authentication-success-handler-ref="customLoginSuccess"/> -->
 	<security:form-login login-page="/users/login"/>
+	
 	<security:logout logout-url="/logout" invalidate-session="true" delete-cookies="remember-me,JSESSIONID"/>
+	
 	<security:remember-me data-source-ref="dataSource" token-validity-seconds="604800"/>
 	
 	<!-- <security:csrf disabled="true"/> -->

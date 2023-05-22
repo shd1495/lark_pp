@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zkzkdh451.mapper.BoardReplyMapper">
+
+	<insert id="insert">
+		INSERT INTO lark_boardreply (bno, reply, replyer)
+		VALUES (#{bno}, #{reply}, #{replyer})
+	</insert>
+
+	<select id="read" resultType="com.zkzkdh451.domain.BoardReplyVO">
+		select * from lark_boardreply WHERE rno = #{rno}
+	</select>
+	
+	<delete id="delete">
+		delete from lark_boardreply WHERE rno = #{rno}
+	</delete>
+	
+	<delete id="deleteAll">
+		delete from lark_boardreply WHERE bno = #{bno}
+	</delete>
+	
+	<update id="update">
+		UPDATE lark_boardreply SET reply = #{reply} , updateDate = now()
+		WHERE rno = #{rno}
+	</update>
+	
+	<select id="getListWithPaging" resultType="com.zkzkdh451.domain.BoardReplyVO">
+		SELECT * FROM lark_boardreply 
+		WHERE bno = #{bno}
+		ORDER BY rno ASC
+		LIMIT #{start}, #{amount}
+	</select>
+	
+	<select id="getCountByBno" resultType="int">
+		SELECT count(rno) from lark_boardreply where bno = #{bno}
+	</select>
+	
+</mapper>
