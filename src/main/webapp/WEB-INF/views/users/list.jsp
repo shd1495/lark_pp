@@ -87,6 +87,23 @@
 					</nav>
 					<!-- END search-results-navigation -->
 				</div>
+				<div class="d-flex justify-content-center" style="margin-top: 27px;">
+					<form id="searchForm" class="form-inline">
+						<input type="hidden" name="pageNum"
+							value="${pageMaker.cri.pageNum}"> <input type="hidden"
+							name="amount" value="${pageMaker.cri.amount}">
+							<select name="type" class="form-control col-md-3">
+								<option value="">전체</option>
+								<option value="I" ${pageMaker.cri.type eq "I"?"selected":"" }>아이디</option>
+								<option value="N" ${pageMaker.cri.type eq "N"?"selected":"" }>이름</option>
+								<option value="A" ${pageMaker.cri.type eq "A"?"selected":"" }>권한</option>
+							</select>
+							<input type="text" name="keyword" class="form-control col-md-7" value="${pageMaker.cri.keyword}">
+						<div class="form-group">
+							<button class="btn btn-secondary">검색</button>
+						</div>
+					</form>
+				</div>
 			</div>
 		</div>
 

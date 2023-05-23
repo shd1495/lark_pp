@@ -30,9 +30,6 @@ PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
 						<when test="type == 'N'.toString()">
 							username LIKE concat('%',#{keyword},'%')
 						</when>
-						<when test="type == 'A'.toString()">
-							auth LIKE concat('%',#{keyword},'%')
-						</when>
 					</choose>
 				</trim>
 			</foreach>
@@ -44,11 +41,10 @@ PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
 		SELECT u.userid, userpw, username, regdate, updatedate, enabled, auth
 		FROM lark_users u left join lark_users_auth ua
 		on (u.userid = ua.userid)
-		WHERE enabled = 1
 		
 		<include refid="usersCriteria"></include>
 		
-		ORDER BY userid DESC 
+		ORDER BY u.userid DESC 
 		LIMIT #{start}, #{amount}
 	</select>
 	
