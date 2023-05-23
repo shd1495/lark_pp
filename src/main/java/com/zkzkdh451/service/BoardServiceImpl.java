@@ -14,8 +14,10 @@ import com.zkzkdh451.mapper.BoardMapper;
 import com.zkzkdh451.mapper.BoardReplyMapper;
 
 import lombok.Setter;
+import lombok.extern.log4j.Log4j;
 
 @Service
+@Log4j
 public class BoardServiceImpl implements BoardService {
 	
 	@Setter(onMethod_ = @Autowired)
@@ -31,10 +33,11 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public void write(BoardVO vo) {
 		mapper.insert(vo);
+		log.info(vo);
 		if(vo.getAttachList() == null || vo.getAttachList().size() <= 0) {
 			return;
 		}
-		
+		log.info(vo.getBno());
 		vo.getAttachList().forEach(attach ->{
 			attach.setBno(vo.getBno());
 			attach.setTableId(vo.getTABLE_ID());

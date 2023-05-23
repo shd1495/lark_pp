@@ -547,7 +547,7 @@ modalRemoveBtn.on("click", function(){
 				if(obj.fileType != '1'){
 					str += "<li data-path='"+obj.uploadPath+"' data-uuid='"+obj.uuid+"' data-filename='"+obj.fileName+"' data-type='"+obj.fileType+"'>";
 					str += "<div><span>" + obj.fileName + "</span>";
-					str += "<img src='/resources/assets/images/attach.png'></div>"
+					str += "<img src='../../resources/img/attach.png'></div>"
 					str += "</li>"
 				} else {
 					//이미지파일

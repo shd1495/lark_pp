@@ -14,7 +14,7 @@
 				<h6 class="m-0 font-weight-bold text-primary">글쓰기</h6>
 			</div>
 			<div class="card-body">
-				<form class="form-group" action="/board/write" method="post">
+				<form id="form" class="form-group" action="/board/write" method="post">
 					<input type="hidden" name="${_csrf.parameterName }"
 						value="${_csrf.token }" />
 					<sec:authentication property="principal" var="pinfo" />
@@ -34,26 +34,25 @@
 							class="form-control" placeholder="내용" required></textarea>
 					</div>
 					<hr>
-					<div class="row">
-						<div class="card shadow col-md-12">
-							<div class="card-heading">파일 첨부</div>
-							<div class="card-body">
-								<div class="form-group uploadDiv">
-									<input type="file" name="uploadFile" multiple="multiple">
-								</div>
-								<div class="uploadResult">
-									<ul>
-
-									</ul>
-								</div>
+				</form>
+				<div class="form-group text-right">
+					<button type="submit" class="btn btn-primary">쓰기</button>
+					<button type="button" class="btn btn-secondary">취소</button>
+				</div>
+				<div class="row">
+					<div class="card shadow">
+						<div class="card-heading">파일 첨부</div>
+						<div class="card-body">
+							<div class="form-group uploadDiv">
+								<input type="file" name="uploadFile" multiple="multiple">
+							</div>
+							<div class="uploadResult d-flex">
+								<ul class="list-inline">
+								</ul>
 							</div>
 						</div>
 					</div>
-					<div class="form-group text-right">
-						<button type="submit" class="btn btn-primary">쓰기</button>
-						<button type="button" class="btn btn-secondary">취소</button>
-					</div>
-				</form>
+				</div>
 			</div>
 		</div>
 
@@ -94,7 +93,7 @@ $(document).ready(function(){
 			str += "<input type='hidden' name='attachList["+i+"].fileType' value='"+type+"'>";
 		});
 		
-		formObj.append(str).submit();
+		$("#form").append(str).submit();
 	});
 	
 	
@@ -174,16 +173,16 @@ $(document).ready(function(){
 			let fileDownPath = obj.uploadPath+"/"+obj.uuid+"_"+encodeURIComponent(obj.fileName);
 			
 			if(!obj.image){
-				str += "<li data-path='"+obj.uploadPath+"' data-uuid='"+obj.uuid+"' data-filename='"+obj.fileName+"' data-type='"+obj.image+"'>";
+				str += "<li class='list-inline-item' data-path='"+obj.uploadPath+"' data-uuid='"+obj.uuid+"' data-filename='"+obj.fileName+"' data-type='"+obj.image+"'>";
 				str += "<div><span><a href='/download?fileName="+fileDownPath+"'>" + obj.fileName + "</a></span>";
-				str += "<button type='button' data-file='"+fileDownPath+"' data-type='file' class='btn btn-warning btn-circle'><i class='fa fa-times'></i></button>";
-				str += "<img src='/resources/assets/images/attach.png'></div>"
+				str += "<button type='button' data-file='"+fileDownPath+"' data-type='file' class='btn btn-warning btn-circle btn-sm'><i class='fa fa-times'></i></button>";
+				str += "<img src='../../resources/img/attach.png'></div>"
 				str += "</li>"
 			} else {
 				let fileCallPath = encodeURIComponent(obj.uploadPath + "/thum_"+obj.uuid+"_"+obj.fileName);
 				
 				fileDownPath = fileDownPath.replace(new RegExp(/\\/g), "/");
-				str += "<li data-path='"+obj.uploadPath+"' data-uuid='"+obj.uuid+"' data-filename='"+obj.fileName+"' data-type='"+obj.image+"'><div>";
+				str += "<li class='list-inline-item' data-path='"+obj.uploadPath+"' data-uuid='"+obj.uuid+"' data-filename='"+obj.fileName+"' data-type='"+obj.image+"'><div>";
 				str += "<span><a href='/download?fileName="+fileDownPath+"'>" + obj.fileName + "</a></span>";
 				str += "<button type='button' data-file='"+fileCallPath+"' data-type='image' class='btn btn-warning btn-circle btn-sm'><i class='fa fa-times'></i></button>";
 				str += "<a href='javascript:showImage(\""+fileDownPath+"\")'><img src='/display?fileName="+fileCallPath+"'></a>"

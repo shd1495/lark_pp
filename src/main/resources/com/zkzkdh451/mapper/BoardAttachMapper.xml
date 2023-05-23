@@ -5,24 +5,24 @@ PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
 <mapper namespace="com.zkzkdh451.mapper.BoardAttachMapper">
 
 	<insert id="insert">
-		insert into tbl_attach (uuid, uploadPath, fileName, fileType, tableId, bno)
+		insert into lark_attach (uuid, uploadPath, fileName, fileType, tableId, bno)
 		values (#{uuid}, #{uploadPath}, #{fileName}, #{fileType}, #{tableId}, #{bno})
 	</insert>
 	
 	<delete id="delete">
-		delete from tbl_attach where uuid = #{uuid}
+		delete from lark_attach where uuid = #{uuid}
 	</delete>
 	
 	<select id="findByBno" resultType="com.zkzkdh451.domain.BoardAttachVO">
-		select uuid, uploadPath, fileName, fileType, tableId, bno from tbl_attach where tableId = #{TABLE_ID} and bno =#{bno}
+		select uuid, uploadPath, fileName, fileType, tableId, bno from lark_attach where tableId = #{TABLE_ID} and bno =#{bno}
 	</select>
 	
 	<delete id="deleteAll">
-		delete from tbl_attach where tableId = #{TABLE_ID} AND bno = #{bno}
+		delete from lark_attach where tableId = #{TABLE_ID} AND bno = #{bno}
 	</delete>
 	
 	<select id="getOldFiles" resultType="com.zkzkdh451.domain.BoardAttachVO">
-		select uuid, uploadPath, fileName, fileType, tableId, bno from tbl_attach 
+		select uuid, uploadPath, fileName, fileType, tableId, bno from lark_attach 
 		where uploadPath = date_format(date_add(now(),interval -1 day),'%Y\\%m\\%d')
 	</select>
 	

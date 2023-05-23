@@ -26,6 +26,13 @@
 		<constructor-arg ref="hikariConfig"></constructor-arg>
 	</bean>
 	
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+	<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	
+	<tx:annotation-driven/>
+	<context:annotation-config></context:annotation-config>
+	
 	<!-- MyBatis -->
 	<bean id="sqlSesstionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"></property>
@@ -34,5 +41,6 @@
 	<!-- MyBatis Scan -->
 	<mybatis-spring:scan base-package="com.zkzkdh451.mapper"/>
 	<context:component-scan base-package="com.zkzkdh451.service"/>
+	<task:annotation-driven/>
 		
 </beans>

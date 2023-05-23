@@ -25,6 +25,9 @@ PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
 	</sql>
 	
 	<insert id="insert">
+		<selectKey keyProperty="bno" order="BEFORE" resultType="long">
+			SELECT ifnull(MAX(bno), 0) + 1 FROM lark_board
+		</selectKey>
 		INSERT INTO lark_board (title, content, userid)
 		VALUES (#{title}, #{content}, #{userid})
 	</insert>

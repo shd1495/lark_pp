@@ -6,6 +6,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.zkzkdh451.domain.BoardAttachVO;
@@ -53,9 +56,13 @@ public class BoardController {
 	
 	@PreAuthorize("isAuthenticated()")
 	@PostMapping("/write")
-	public String write(BoardVO vo) {
+	public String write(BoardVO vo, RedirectAttributes rttr) {
 		
 		service.write(vo); 
+		
+		log.info(vo.getBno());
+		
+		rttr.addFlashAttribute("result", vo.getBno());
 		
 		return "redirect:/board/list";
 	}
@@ -117,5 +124,13 @@ public class BoardController {
 				e.printStackTrace();
 			}
 		});
+	}
+	
+	@GetMapping("/getAttachList")
+	@ResponseBody
+	public ResponseEntity<List<BoardAttachVO>> getAttachList(Long bno){
+		BoardVO vo = new BoardVO();
+		vo.setBno(bno);
+		return new ResponseEntity<>(service.getAttachList(vo), HttpStatus.OK);
 	}
 }
