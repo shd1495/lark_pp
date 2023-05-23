@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.zkzkdh451.domain.AuthVO;
 import com.zkzkdh451.domain.Criteria;
@@ -104,6 +105,24 @@ public class UsersController {
         modelMap.addAttribute("user", user);
 	}
 	
+	@PreAuthorize("hasAuthority('ADMIN')")
+	@GetMapping("/userMod")
+	public void userMod (String userid, Model model){
+        UsersVO user = service.read(userid);
+        model.addAttribute("user", user);
+	}
+	
+	@PreAuthorize("hasAuthority('ADMIN')")
+	@PostMapping("/userMod")
+	public String userMod (AuthVO vo, RedirectAttributes rttr) {
+		if(service.modify(vo)) {
+			rttr.addFlashAttribute("result", "success");
+		}	
+		return "redirect:/users/list";
+	}
+	
+	
+	@PreAuthorize("hasAuthority('ADMIN')")
 	@GetMapping("/list")
 	public void list(UsersCriteria cri, Model model) {
 		model.addAttribute("list", service.getList(cri));

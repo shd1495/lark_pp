@@ -81,4 +81,9 @@ PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
 		INSERT INTO lark_users_auth (userid, auth)
 		VALUES (#{userid}, #{auth})
 	</insert>
+	
+	<update id="update">
+		UPDATE lark_users_auth SET auth=#{auth}
+		WHERE userid = #{userid}		
+	</update>
 </mapper>

@@ -53,4 +53,10 @@ public class UsersServiceImpl implements UsersService {
 		return mapper.getTotalCount(cri);
 	}
 
+	@Override
+	public boolean modify(AuthVO vo) {
+		boolean modifyResult = mapper.update(vo);
+		return modifyResult;
+	}
+
 }

@@ -26,6 +26,7 @@
 							<col style="width: 200px;" />
 							<col style="width: 200px;" />
 							<col style="width: 80px;" />
+							<col style="width: 80px;" />
 						</colgroup>
 						<thead>
 							<tr>
@@ -34,6 +35,7 @@
 								<th>회원 등록일시</th>
 								<th>회원 정보 수정일시</th>
 								<th>권한</th>
+								<th>권한 수정</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -47,6 +49,8 @@
 									<td><fmt:formatDate value="${users.updateDate }"
 											pattern="yyyy-MM-dd HH:mm" /></td>
 									<td>${users.authList[0].auth }</td>
+									<td class="text-center"><a href="/users/userMod?userid=${users.userid}" role="button"
+										 class="btn btn-secondary btn-sm btnMod">수정</a></td>
 								</tr>
 								<c:set var="cnt" value="${cnt+1}" />
 							</c:forEach>

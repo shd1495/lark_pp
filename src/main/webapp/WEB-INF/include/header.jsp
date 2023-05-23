@@ -73,6 +73,7 @@
                         <h6 class="collapse-header">목록:</h6>
                         <a class="collapse-item" href="/users/login">로그인</a>
                         <a class="collapse-item" href="/users/register">회원가입</a>
+                        <a class="collapse-item" href="/users/userInfo">회원정보</a>
                         <a class="collapse-item" href="/board/list">자유게시판</a>
                     </div>
                 </div>
@@ -210,7 +211,7 @@
                                 aria-labelledby="userDropdown">
                                 <a class="dropdown-item" href="/users/userInfo">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    사용자 정보
+                                    회원 정보
                                 </a>
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
