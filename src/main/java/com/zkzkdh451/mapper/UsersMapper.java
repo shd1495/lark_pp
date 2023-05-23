@@ -1,6 +1,9 @@
 package com.zkzkdh451.mapper;
 
+import java.util.List;
+
 import com.zkzkdh451.domain.AuthVO;
+import com.zkzkdh451.domain.UsersCriteria;
 import com.zkzkdh451.domain.UsersVO;
 
 public interface UsersMapper {
@@ -12,4 +15,8 @@ public interface UsersMapper {
 	public int idChk(String id);
 
 	public void insertAuth(AuthVO auth);
+	
+	public List<UsersVO> getList(UsersCriteria cri);
+	
+	public int getTotalCount(UsersCriteria cri);
 }

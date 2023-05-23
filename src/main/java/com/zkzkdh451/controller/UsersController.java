@@ -22,6 +22,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.zkzkdh451.domain.AuthVO;
+import com.zkzkdh451.domain.Criteria;
+import com.zkzkdh451.domain.PageDTO;
+import com.zkzkdh451.domain.UsersCriteria;
+import com.zkzkdh451.domain.UsersPageDTO;
 import com.zkzkdh451.domain.UsersVO;
 import com.zkzkdh451.service.UsersService;
 
@@ -98,5 +102,14 @@ public class UsersController {
         String loginId = principal.getName();
         UsersVO user = service.read(loginId);
         modelMap.addAttribute("user", user);
+	}
+	
+	@GetMapping("/list")
+	public void list(UsersCriteria cri, Model model) {
+		model.addAttribute("list", service.getList(cri));
+		
+		int total = service.getTotal(cri);
+		
+		model.addAttribute("pageMaker", new UsersPageDTO(cri, total));
 	}
 }

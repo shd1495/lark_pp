@@ -48,7 +48,6 @@ width: 600px;
 					<input type="hidden" name="type" value="${cri.type }">
 					<input type="hidden" name="keyword" value="${cri.keyword }"> 
 					<input type="hidden" name="bno" value="${board.bno}">
-					<input type="hidden" name="userid" value="${board.userid}">
 					<div>
 						<label class="form-label col-md-8">제목</label> <label
 							class="form-label col-md-3">작성자 : ${board.userid}</label> <input

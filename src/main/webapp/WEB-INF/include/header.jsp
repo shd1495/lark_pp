@@ -89,10 +89,7 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">목록</h6>
-                        <a class="collapse-item" href="utilities-color.html">회원 목록</a>
-                        <a class="collapse-item" href="utilities-border.html">2</a>
-                        <a class="collapse-item" href="utilities-animation.html">3</a>
-                        <a class="collapse-item" href="utilities-other.html">4</a>
+                        <a class="collapse-item" href="/users/list">회원 목록</a>
                     </div>
                 </div>
             </li>

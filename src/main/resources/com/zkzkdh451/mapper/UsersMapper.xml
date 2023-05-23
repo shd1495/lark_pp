@@ -3,7 +3,7 @@
 PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zkzkdh451.mapper.UsersMapper">
-	
+
 	<resultMap type="com.zkzkdh451.domain.UsersVO" id="usersMap">
 		<id property="userid" column="userid"/>
 		<result property="userid" column="userid"/>
@@ -18,6 +18,47 @@ PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
 		<result property="userid" column="userid"/>
 		<result property="auth" column="auth"/>
 	</resultMap>
+
+	<sql id="usersCriteria">
+		<trim prefix="AND (" suffix=") " prefixOverrides = "OR">
+			<foreach item="type" collection="typeArr">
+				<trim prefix="OR">
+					<choose>
+						<when test="type == 'I'.toString()">
+							userid LIKE concat('%',#{keyword},'%')
+						</when>
+						<when test="type == 'N'.toString()">
+							username LIKE concat('%',#{keyword},'%')
+						</when>
+						<when test="type == 'A'.toString()">
+							auth LIKE concat('%',#{keyword},'%')
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>	
+	</sql>
+	
+	<select id="getList" resultMap="usersMap">
+	
+		SELECT u.userid, userpw, username, regdate, updatedate, enabled, auth
+		FROM lark_users u left join lark_users_auth ua
+		on (u.userid = ua.userid)
+		WHERE enabled = 1
+		
+		<include refid="usersCriteria"></include>
+		
+		ORDER BY userid DESC 
+		LIMIT #{start}, #{amount}
+	</select>
+	
+	<select id="getTotalCount" resultType="int">
+	
+		SELECT count(*)
+		FROM lark_users
+		
+		<include refid="usersCriteria"></include>
+	</select>
 	
 	<select id="read" resultMap="usersMap">
 		SELECT u.userid, userpw, username, regdate, updatedate, enabled, auth

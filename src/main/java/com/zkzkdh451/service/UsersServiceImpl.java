@@ -1,9 +1,14 @@
 package com.zkzkdh451.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.zkzkdh451.domain.AuthVO;
+import com.zkzkdh451.domain.BoardVO;
+import com.zkzkdh451.domain.Criteria;
+import com.zkzkdh451.domain.UsersCriteria;
 import com.zkzkdh451.domain.UsersVO;
 import com.zkzkdh451.mapper.UsersMapper;
 
@@ -36,6 +41,16 @@ public class UsersServiceImpl implements UsersService {
 	@Override
 	public UsersVO read(String id) {
 		return mapper.read(id);
+	}
+	
+	@Override
+	public List<UsersVO> getList(UsersCriteria cri) {
+		return mapper.getList(cri);
+	}
+	
+	@Override
+	public int getTotal(UsersCriteria cri) {
+		return mapper.getTotalCount(cri);
 	}
 
 }
