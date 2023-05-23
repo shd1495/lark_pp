@@ -20,6 +20,7 @@
 					<input type="hidden" name="keyword" value="${cri.keyword }"> <!-- 검색어 -->
 					<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }" /> <!-- csrf -->
 					<input type="hidden" name="bno" value="${board.bno}"> <!-- 글 번호 -->
+					<input type="hidden" name="userid" value="${board.userid}"> <!-- 유저 아이디 -->
 					<div>
 						<label class="form-label col-md-8">제목</label>
 						<label class="form-label col-md-3">작성자 : ${board.userid}</label>
@@ -33,6 +34,21 @@
 						<textarea id="content" name="content" rows="20" class="form-control" placeholder="내용" required>${board.content}</textarea>
 					</div>
 					<hr>
+					<div class="row">
+						<div class="card shadow">
+							<div class="card-heading">파일첨부</div>
+							<div class="card-body">
+								<div class="form-group uploadDiv">
+									<input type="file" name="uploadFile" multiple="multiple">
+								</div>
+								<div class="uploadResult">
+									<ul>
+									
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
 					<div class="form-group text-right">
 						<button type="submit" class="btn btn-primary" data-oper="modify">수정</button>
 						<button type="submit" class="btn btn-warning" data-oper="remove">삭제</button>
@@ -50,8 +66,106 @@
 <script>
 $(document).ready(function(){
 	
-	let formObj = $("form[role=form]");
+	let csrfHeaderName = "${_csrf.headerName}";
+	let csrfTokenValue = "${_csrf.token}";
 	
+	let formObj = $("form[role=form]");
+
+	let regex = new RegExp("(.*?)\.(png|gif|jpg|txt)$");
+	let maxSize = 5242880;//5Mbyte
+	
+	function checkExtension(fileName, fileSize){
+		if(fileSize >= maxSize){
+			alert("파일 사이즈 초과");
+			return false;
+		}
+		
+		if(!regex.test(fileName)){
+			alert("해당 종류의 파일은 업로드 할 수 없습니다.");
+			return false;
+		}
+		return true;
+	}
+	
+	
+	var cloneObj = $(".uploadDiv").clone();
+	
+	$(".uploadDiv").on("change","input[type=file]", function(){
+		console.log("change");
+		let formData = new FormData();
+		
+		let inputFile = $("input[name=uploadFile]");
+		
+		let files = inputFile[0].files;
+		console.log(files);
+		
+		for(let i = 0; i < files.length; i++){
+			
+			if(!checkExtension(files[i].name, files[i].size)){
+				return false;
+			}
+			
+			formData.append("uploadFile", files[i]);
+		}
+		
+		$.ajax({
+			url:'/uploadAjaxAction',
+			processData:false,
+			contentType:false,
+			data:formData,
+			type:'POST',
+			dataType:'json',
+			beforeSend:function(xhr){
+				xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+			},
+			success:function(result){
+				console.log(result);
+				/* input type=file 을 초기화 */
+				$(".uploadDiv").html(cloneObj.html());
+				
+				/* ajax 결과값을 출력 */
+				showUploadedFile(result);
+				
+			}
+		});
+		
+		
+	});
+	
+	let uploadResult = $(".uploadResult ul");
+	
+	function showUploadedFile(uploadResultArr){
+		
+		if(!uploadResultArr || uploadResultArr.length == 0){
+			return;
+		}
+		
+		let str = "";
+		
+		$(uploadResultArr).each(function(i, obj){
+			
+			let fileDownPath = obj.uploadPath+"/"+obj.uuid+"_"+encodeURIComponent(obj.fileName);
+			
+			if(!obj.image){
+				str += "<li data-path='"+obj.uploadPath+"' data-uuid='"+obj.uuid+"' data-filename='"+obj.fileName+"' data-type='"+obj.image+"'>";
+				str += "<div><span><a href='/download?fileName="+fileDownPath+"'>" + obj.fileName + "</a></span>";
+				str += "<button type='button' data-file='"+fileDownPath+"' data-type='file' class='btn btn-warning btn-circle'><i class='fa fa-times'></i></button>";
+				str += "<img src='/resources/assets/images/attach.png'></div>"
+				str += "</li>"
+			} else {
+				let fileCallPath = encodeURIComponent(obj.uploadPath + "/thum_"+obj.uuid+"_"+obj.fileName);
+				
+				fileDownPath = fileDownPath.replace(new RegExp(/\\/g), "/");
+				str += "<li data-path='"+obj.uploadPath+"' data-uuid='"+obj.uuid+"' data-filename='"+obj.fileName+"' data-type='"+obj.image+"'><div>";
+				str += "<span><a href='/download?fileName="+fileDownPath+"'>" + obj.fileName + "</a></span>";
+				str += "<button type='button' data-file='"+fileCallPath+"' data-type='image' class='btn btn-warning btn-circle'><i class='fa fa-times'></i></button>";
+				str += "<a href='javascript:showImage(\""+fileDownPath+"\")'><img src='/display?fileName="+fileCallPath+"'></a>"
+				str += "</div></li>"
+			}
+		});
+		
+		uploadResult.append(str);
+	}
 	//수정, 삭제, 목록 버튼 눌렀을 시
 	$("button[type=submit]").on("click", function(event){
 		event.preventDefault();
@@ -100,6 +214,51 @@ $(document).ready(function(){
 		}
 		
 		formObj.submit();
+	});
+	
+	let bnoValue = '<c:out value="${board.bno }"/>';
+	
+	//let uploadResult = $(".uploadResult ul");
+	
+	(function(){
+		$.getJSON("/board/getAttachList", {bno: bnoValue}, function(uploadResultArr){
+			
+			let str = "";
+			
+			$(uploadResultArr).each(function(i, obj){
+				
+				let fileDownPath = obj.uploadPath+"/"+obj.uuid+"_"+encodeURIComponent(obj.fileName);
+				//console.log(obj);
+				
+				//일반파일
+				if(obj.fileType != '1'){
+					str += "<li data-path='"+obj.uploadPath+"' data-uuid='"+obj.uuid+"' data-filename='"+obj.fileName+"' data-type='"+obj.fileType+"'>";
+					str += "<div><span>" + obj.fileName + "</span>";
+					str += "<button type='button' data-file='"+fileDownPath+"' data-type='file' class='btn btn-warning btn-circle btn-sm'><i class='fa fa-times'></i></button>";
+					str += "<img src='../../resources/img/attach.png'></div>"
+					str += "</li>"
+				} else {
+					//이미지파일
+					let fileCallPath = encodeURIComponent(obj.uploadPath + "/thum_"+obj.uuid+"_"+obj.fileName);
+					
+					fileDownPath = fileDownPath.replace(new RegExp(/\\/g), "/");
+					str += "<li data-path='"+obj.uploadPath+"' data-uuid='"+obj.uuid+"' data-fileName='"+obj.fileName+"' data-type='"+obj.fileType+"'><div>";
+					str += "<span>" + obj.fileName + "</span>";
+					str += "<button type='button' data-file='"+fileDownPath+"' data-type='image' class='btn btn-warning btn-circle btn-sm'><i class='fa fa-times'></i></button>";
+					str += "<img src='/display?fileName="+fileCallPath+"'>"
+					str += "</div></li>"
+				}
+			});
+			
+			uploadResult.append(str);
+		});	
+	})();
+	
+	
+	$(".uploadResult").on("click","button", function(){
+		if(confirm("정말로 삭제하시겠습니까?")){
+			$(this).closest("li").remove();
+		}
 	});
 	
 });
