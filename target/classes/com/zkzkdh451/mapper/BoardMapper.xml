@@ -70,7 +70,7 @@ PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
 	</update>
 	
 	<update id="updateReplyCnt">
-		update tbl_board set replyCnt = replyCnt + #{amount} where bno = #{bno}
+		update lark_board set replyCnt = replyCnt + #{amount} where bno = #{bno}
 	</update>
 	
 	<delete id="delete">
