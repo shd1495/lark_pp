@@ -23,15 +23,19 @@
 						<colgroup>
 							<col style="width: 150px;" />
 							<col style="width: 150px;" />
-							<col style="width: 200px;" />
-							<col style="width: 200px;" />
+							<col style="width: 150px;" />
+							<col style="width: 150px;" />
+							<col style="width: 180px;" />
+							<col style="width: 180px;" />
 							<col style="width: 80px;" />
-							<col style="width: 80px;" />
+							<col style="width: 100px;" />
 						</colgroup>
 						<thead>
 							<tr>
 								<th>회원 아이디</th>
 								<th>회원 이름</th>
+								<th>회원 별명</th>
+								<th>회원 이메일</th>
 								<th>회원 등록일시</th>
 								<th>회원 정보 수정일시</th>
 								<th>권한</th>
@@ -44,6 +48,8 @@
 								<tr>
 									<td>${users.userid }</td>
 									<td>${users.userName }</td>
+									<td>${users.nickname }</td>
+									<td>${users.userEmail }</td>
 									<td><fmt:formatDate value="${users.regDate }"
 											pattern="yyyy-MM-dd HH:mm" /></td>
 									<td><fmt:formatDate value="${users.updateDate }"
@@ -86,23 +92,6 @@
 						</ul>
 					</nav>
 					<!-- END search-results-navigation -->
-				</div>
-				<div class="d-flex justify-content-center" style="margin-top: 27px;">
-					<form id="searchForm" class="form-inline">
-						<input type="hidden" name="pageNum"
-							value="${pageMaker.cri.pageNum}"> <input type="hidden"
-							name="amount" value="${pageMaker.cri.amount}">
-							<select name="type" class="form-control col-md-3">
-								<option value="">전체</option>
-								<option value="I" ${pageMaker.cri.type eq "I"?"selected":"" }>아이디</option>
-								<option value="N" ${pageMaker.cri.type eq "N"?"selected":"" }>이름</option>
-								<option value="A" ${pageMaker.cri.type eq "A"?"selected":"" }>권한</option>
-							</select>
-							<input type="text" name="keyword" class="form-control col-md-7" value="${pageMaker.cri.keyword}">
-						<div class="form-group">
-							<button class="btn btn-secondary">검색</button>
-						</div>
-					</form>
 				</div>
 			</div>
 		</div>

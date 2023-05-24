@@ -57,18 +57,26 @@
 								<input type="hidden" name="auth" id="role1" value="USER">
                                	<small id="msg"></small>
                                 <div id="id" class="form-group">
-                                    <input type="text" class="form-control form-control-user col-md-9" id="userid"
+                                    <input type="text" class="form-control form-control-user" id="userid"
                                         name="userid" placeholder="ID" required="required">
-                                    <button type="button" id="idchkBtn" class="btn btn-user btn-warning col-md-3" >중복 체크</button>
                                 </div>
                                	<small id="msg2"></small>
                                	<div class="form-group">
                                     <input type="password" class="form-control form-control-user"
-                                        id="userpw" name="userpw" placeholder="Password" required="required">
+                                        id="userpw" name="userpw" placeholder="Password" required>
+                                </div>
+                                <small id="msg3"></small>
+                                <div id="id" class="form-group">
+                                    <input type="text" class="form-control form-control-user" id="nickname"
+                                        name="nickname" placeholder="NickName" required="required">
                                 </div>
                                 <div class="form-group">
                                     <input type="text" class="form-control form-control-user" id="userName"
-                                        name="userName" placeholder="USERNAME" required="required">
+                                        name="userName" placeholder="Name" required="required">
+                                </div>
+                                <div class="form-group">
+                                    <input type="email" class="form-control form-control-user" id="userEmail"
+                                        name="userEmail" placeholder="Email@Example.com" required>
                                 </div>
                                 <button id="btnSubmit" type="submit" class="btn btn-primary btn-user btn-block">
                                     계정 생성
@@ -96,6 +104,7 @@
     </div>
     
 <script>
+
 $(document).ready(function(){
 
 	var csrfHeaderName = "${_csrf.headerName}";
@@ -105,45 +114,16 @@ $(document).ready(function(){
 		xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
 	});
 	
-	idchk = 2;
-
-	//중복 체크 버튼 ajax통신으로 중복체크
-	$("#idchkBtn").on("click", function(){
-		let userid = $("#userid").val();
-		$.ajax({
-			url:'/users/idChk',
-			type:'get',
-			contentType: 'application/JSON; charset=utf-8',
-			data: {userid : userid},
-			dataType:'JSON',
-			beforeSend:function(xhr){
-				xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
-			},
-			success:function(result){
-				if(result == "1"){
-					alert("중복된 아이디 입니다.");
-					idchk = 1;
-				} else if($('#userid').val() == ""){
-					alert("아이디를 입력해주세요.");
-					idchk = 2;
-				} else{
-					alert("사용가능한 아이디입니다.");
-					idchk = 0;
-					
-				}
-			}
-		});
-	});
 	
 	//패스워드에 조건 추가
 	$('#userpw').on("keyup", function(){
 		if($(this).val().length < 6 || $(this).val().length > 12){
-			$('#msg2').html("6~12자 사이로 입력하세요.");
+			$('#msg2').html("6~12자 사이로 입력해주세요.");
 			$('#msg2').css("color", "#f00").css("z-index",1);
 		} else {
 			let regPass = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{6,12}$/;
 			if (!regPass.test($(this).val())) {
-				$('#msg2').html("영문자 숫자 특수문자를 포함하세요.");
+				$('#msg2').html("영문자 숫자 특수문자를 포함해주세요.");
 				$('#msg2').css("color", "#f00").css("z-index",1);
 			} else {
 				$('#msg2').html("");
@@ -154,39 +134,65 @@ $(document).ready(function(){
 	//아이디에 조건 추가
 	$('#userid').on("keyup", function(){
 		if($(this).val().length < 6 || $(this).val().length > 12){
-			$('#msg').html("6~12자 사이로 입력하세요.");
+			$('#msg').html("6~12자 사이로 입력해주세요.");
 			$('#msg').css("color", "#f00").css("z-index",1);
 		} else {
 			$('#msg').html("");
 		}
 	});
 	
+	$('#nickname').on("keyup", function(){
+		if($(this).val().length < 3 || $(this).val().length > 12){
+			$('#msg3').html("3~12자 사이로 입력해주세요.");
+			$('#msg3').css("color", "#f00").css("z-index",1);
+		} else {
+			$('#msg3').html("");
+		}
+	});
+
 	//생성 버튼 누를 시 조건 체크
 	$('#btnSubmit').on('click', function(event){
 		event.preventDefault();
-		if($('#userid').val() == '' || $('#userid').val().length < 6 || $('#userid').val().length > 12 || idchk == 1 ){
-			alert("양식에 맞는 아이디를 입력하세요.");
+		if($('#userid').val() == '' || $('#userid').val().length < 6 || $('#userid').val().length > 12){
+			alert("양식에 맞는 아이디를 입력해주세요.");
 			$('#userid').focus();
 			return;
 		}
 		let regPass = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{6,12}$/;
 		if($('#userpw').val() == '' || $('#userpw').val().length < 6 || $('#userpw').val().length > 12  || !regPass.test($('#userpw').val()) == true){
-			alert("양식에 맞는 비밀번호를 입력하세요.");
+			alert("양식에 맞는 비밀번호를 입력해주세요.");
 			$('#userpw').focus();
 			return;
 		}
 		if($('#userName').val() == '' || $('#userName').val().length <= 2){
-			alert("이름을 입력하세요..");
+			alert("이름을 입력해주세요.");
 			$('#name').focus();
 			return;
 		}
-		if(idchk == 0){
-			$("#form").submit();
-		} else {
-			alert("중복 체크 확인");
-		}
+		
+		let userid = $("#userid").val();
+		let nickname = $("#nickname").val();
+		$.ajax({
+			url:'/users/idChk',
+			type:'get',
+			contentType: 'application/JSON; charset=utf-8',
+			data: {userid : userid, nickname : nickname},
+			dataType:'JSON',
+			success:function(result){
+				if(result == "1"){
+					alert("아이디 or 별명을 확인해주세요.");
+				} else if (result == "2"){
+					alert("중복된 아이디 입니다.");
+				} else if (result == "3"){
+					alert("중복된 별명 입니다.");
+				} else {
+					$("#form").submit();
+				}
+			}
+		});
 	});
 });
+
 </script>
 </body>
 

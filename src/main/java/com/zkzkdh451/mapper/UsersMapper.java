@@ -14,6 +14,8 @@ public interface UsersMapper {
 	public UsersVO read(String userid);
 
 	public int idChk(String id);
+	
+	public int nickChk(String nickname);
 
 	public void insertAuth(AuthVO auth);
 	

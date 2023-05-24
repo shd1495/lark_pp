@@ -22,21 +22,12 @@
 				</div>
 				<div class="input-group mb-3">
 				  <span class="input-group-text" id="inputGroup-sizing-default">이름</span>
-				  <input type="text" class="form-control" aria-label="Sizing example input" value="${user.userName }" readonly>
-				</div>
-				<div class="input-group mb-3">
-				  <span class="input-group-text" id="inputGroup-sizing-default">이메일</span>
-				  <input type="email" class="form-control" aria-label="Sizing example input" value="${user.userEmail }" readonly>
+				  <input type="text" class="form-control" aria-label="Sizing example input" value="${user.userName }" required>
 				</div>
 				<div class="input-group mb-3">
 				  <span class="input-group-text" id="inputGroup-sizing-default">가입일</span>
 				  <input type="text" class="form-control" aria-label="Sizing example input" 
 				  		 value='<fmt:formatDate value="${user.regDate }" pattern="yyyy-MM-dd"/>' readonly>
-				</div>
-				<div class="input-group mb-3">
-				  <span class="input-group-text" id="inputGroup-sizing-default">정보수정일</span>
-				  <input type="text" class="form-control" aria-label="Sizing example input" 
-				  		 value='<fmt:formatDate value="${user.updateDate }" pattern="yyyy-MM-dd HH:mm"/>' readonly>
 				</div>
 				<div class="input-group mb-3">
 				  <span class="input-group-text" id="inputGroup-sizing-default">권한</span>

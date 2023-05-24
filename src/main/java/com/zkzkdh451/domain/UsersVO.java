@@ -13,6 +13,8 @@ public class UsersVO {
 	private String userid;
 	private String userpw;
 	private String userName;
+	private String nickname;
+	private String userEmail;
 	
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date regDate;

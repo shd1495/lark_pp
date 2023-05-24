@@ -33,9 +33,20 @@ public class UsersServiceImpl implements UsersService {
 	}
 
 	@Override
-	public int idChk(String id) { 
+	public int idChk(String id, String nickname) { 
+		int chk1 = mapper.nickChk(nickname);
+		int chk2 = mapper.idChk(id);
+		int result = 1;
 		
-		return mapper.idChk(id);
+		if(chk1 == 0 && chk2 == 0) {
+			result = 0;
+		} else if(chk1 == 0 && chk2 == 1){
+			result = 2;
+		} else if(chk1 == 1 && chk2 == 0){
+			result = 3;
+		}
+		
+		return result;
 	}
 
 	@Override

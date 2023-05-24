@@ -9,6 +9,8 @@ PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
 		<result property="userid" column="userid"/>
 		<result property="userpw" column="userpw"/>
 		<result property="userName" column="username"/>
+		<result property="nickname" column="nickname"/>
+		<result property="userEmail" column="useremail"/>
 		<result property="regDate" column="regdate"/>
 		<result property="updateDate" column="updatedate"/>
 		<collection property="authList" resultMap="authMap"/>
@@ -38,7 +40,7 @@ PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
 	
 	<select id="getList" resultMap="usersMap">
 	
-		SELECT u.userid, userpw, username, regdate, updatedate, enabled, auth
+		SELECT u.userid, userpw, username, nickname, useremail, regdate, updatedate, enabled, auth
 		FROM lark_users u left join lark_users_auth ua
 		on (u.userid = ua.userid)
 		
@@ -57,20 +59,25 @@ PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
 	</select>
 	
 	<select id="read" resultMap="usersMap">
-		SELECT u.userid, userpw, username, regdate, updatedate, enabled, auth
+		SELECT u.userid, userpw, username, nickname, useremail, regdate, updatedate, enabled, auth
 		FROM lark_users u left join lark_users_auth ua
 		on (u.userid = ua.userid)
 		where u.userid = #{userid}
 	</select>
 	
 	<insert id="register">
-		INSERT INTO lark_users (userid, userpw, username)
-		VALUES (#{userid}, #{userpw}, #{userName})
+		INSERT INTO lark_users (userid, userpw, username, nickname, useremail)
+		VALUES (#{userid}, #{userpw}, #{userName}, #{nickname}, #{userEmail})
 	</insert>
 	
 	<select id="idChk" resultType="int">
 		SELECT count(*) cnt FROM lark_users
 		WHERE userid = #{userid}
+	</select>
+	
+	<select id="nickChk" resultType="int">
+		SELECT count(*) cnt FROM lark_users
+		WHERE nickname = #{nickname}
 	</select>
 	
 	<insert id="insertAuth">

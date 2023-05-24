@@ -11,7 +11,7 @@ public interface UsersService {
 
 	public void register(UsersVO vo);
 	
-	public int idChk(String id);
+	public int idChk(String id, String nickname);
 	
 	public UsersVO read(String id);
 	

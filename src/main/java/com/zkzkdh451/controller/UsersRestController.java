@@ -24,11 +24,10 @@ public class UsersRestController {
 	
 	@GetMapping(value = "/idChk")
 	@ResponseBody
-	public ResponseEntity<String> idChk(@RequestParam("userid") String id){
+	public ResponseEntity<String> idChk(@RequestParam("userid") String id,@RequestParam("nickname") String nickname){
 		
-		String result = String.valueOf(service.idChk(id));
+		String result = String.valueOf(service.idChk(id, nickname));
 		
 		return new ResponseEntity<String>(result, HttpStatus.OK);
 	}
-
 }
