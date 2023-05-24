@@ -105,6 +105,25 @@ public class UsersController {
         modelMap.addAttribute("user", user);
 	}
 	
+	@PreAuthorize("isAuthenticated()")
+	@GetMapping("/userInfoMod")
+	public void userInfoMod (Principal principal, ModelMap modelMap){
+        String loginId = principal.getName();
+        UsersVO user = service.read(loginId);
+        log.info(user.getUserid());
+        modelMap.addAttribute("user", user);
+	}
+	
+	@PreAuthorize("principal.username == #vo.userid")
+	@PostMapping("/userInfoMod")
+	public String userInfoMod (UsersVO vo, RedirectAttributes rttr){
+		
+		if(service.modify(vo)) {
+			rttr.addFlashAttribute("result", "success");
+		}
+		return "redirect:/users/userInfo";
+	}
+	
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@GetMapping("/userMod")
 	public void userMod (String userid, Model model){
@@ -115,12 +134,11 @@ public class UsersController {
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@PostMapping("/userMod")
 	public String userMod (AuthVO vo, RedirectAttributes rttr) {
-		if(service.modify(vo)) {
+		if(service.authModify(vo)) {
 			rttr.addFlashAttribute("result", "success");
 		}	
 		return "redirect:/users/list";
 	}
-	
 	
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@GetMapping("/list")

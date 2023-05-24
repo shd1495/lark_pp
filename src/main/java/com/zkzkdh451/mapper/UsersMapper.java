@@ -23,5 +23,7 @@ public interface UsersMapper {
 	
 	public int getTotalCount(UsersCriteria cri);
 	
-	public boolean update(AuthVO vo);
+	public boolean authUpdate(AuthVO vo);
+	
+	public boolean update(UsersVO vo);
 }

@@ -19,5 +19,7 @@ public interface UsersService {
 	
 	public int getTotal(UsersCriteria cri); 
 	
-	public boolean modify(AuthVO vo);
+	public boolean authModify(AuthVO vo);
+	
+	public boolean modify(UsersVO vo);
 }

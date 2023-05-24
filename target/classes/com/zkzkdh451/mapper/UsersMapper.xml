@@ -85,8 +85,13 @@ PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
 		VALUES (#{userid}, #{auth})
 	</insert>
 	
-	<update id="update">
+	<update id="authUpdate">
 		UPDATE lark_users_auth SET auth=#{auth}
+		WHERE userid = #{userid}		
+	</update>
+	
+	<update id="update">
+		UPDATE lark_users SET nickname=#{nickname}, useremail=#{userEmail}, updatedate = now()
 		WHERE userid = #{userid}		
 	</update>
 </mapper>

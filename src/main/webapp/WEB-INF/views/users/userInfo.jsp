@@ -25,6 +25,10 @@
 				  <input type="text" class="form-control" aria-label="Sizing example input" value="${user.userName }" readonly>
 				</div>
 				<div class="input-group mb-3">
+				  <span class="input-group-text" id="inputGroup-sizing-default">별명</span>
+				  <input type="text" class="form-control" aria-label="Sizing example input" value="${user.nickname }" readonly>
+				</div>
+				<div class="input-group mb-3">
 				  <span class="input-group-text" id="inputGroup-sizing-default">이메일</span>
 				  <input type="email" class="form-control" aria-label="Sizing example input" value="${user.userEmail }" readonly>
 				</div>
