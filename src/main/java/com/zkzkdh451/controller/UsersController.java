@@ -71,15 +71,6 @@ public class UsersController {
 		
 	}
 	
-	@PostMapping("/login")
-	public String login(UsersVO vo) {
-		
-		vo.getUserid();
-		vo.getAuthList();
-		
-		return "/dashboard";
-	}
-	
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/logout")
 	public void logoutGET() {
@@ -138,5 +129,13 @@ public class UsersController {
 		int total = service.getTotal(cri);
 		
 		model.addAttribute("pageMaker", new UsersPageDTO(cri, total));
+	}
+	
+	@PostMapping("/userInfoDel")
+	public String delete(UsersVO vo, RedirectAttributes rttr) {
+		if(service.remove(vo)) { 
+			rttr.addFlashAttribute("result", "success"); 
+		};
+		return "redirect:/logout";
 	}
 }

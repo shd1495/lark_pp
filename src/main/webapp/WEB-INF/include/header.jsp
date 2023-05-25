@@ -91,6 +91,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">목록</h6>
                         <a class="collapse-item" href="/users/list">회원 목록</a>
+                        <a class="collapse-item" href="/board/list">게시글 삭제</a>
                     </div>
                 </div>
             </li>

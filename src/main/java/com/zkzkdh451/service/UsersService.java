@@ -22,4 +22,6 @@ public interface UsersService {
 	public boolean authModify(AuthVO vo);
 	
 	public boolean modify(UsersVO vo);
+	
+	public boolean remove(UsersVO vo);
 }

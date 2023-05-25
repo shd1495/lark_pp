@@ -76,4 +76,11 @@ public class UsersServiceImpl implements UsersService {
 		return modifyResult;
 	}
 
+	@Override
+	public boolean remove(UsersVO vo) {
+		mapper.deleteAuth(vo.getUserid());
+		
+		return mapper.delete(vo.getUserid());
+	}
+
 }

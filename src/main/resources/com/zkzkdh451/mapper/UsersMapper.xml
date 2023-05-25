@@ -94,4 +94,13 @@ PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
 		UPDATE lark_users SET nickname=#{nickname}, useremail=#{userEmail}, updatedate = now()
 		WHERE userid = #{userid}		
 	</update>
+	
+	<delete id="deleteAuth">
+		DELETE FROM lark_users_auth WHERE userid = #{userid}
+	</delete>
+	
+	<delete id="delete">
+		DELETE FROM lark_users WHERE userid = #{userid}
+	</delete>
+	
 </mapper>
