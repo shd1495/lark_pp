@@ -83,18 +83,18 @@
                                 </button>
                                 <hr>
                                 <a href="/" class="btn btn-google btn-user btn-block">
-                                    <i class="fab fa-google fa-fw"></i> Register with Google
+                                    <i class="fab fa-google fa-fw"></i> 계정생성 with Google
                                 </a>
                                 <a href="/" class="btn btn-facebook btn-user btn-block">
-                                    <i class="fab fa-facebook-f fa-fw"></i> Register with Facebook
+                                    <i class="fab fa-facebook-f fa-fw"></i> 계정생성 with Facebook
                                 </a>
                             </form>
                             <hr>
                             <div class="text-center">
-                                <a class="small" href="">Forgot Password?</a>
+                                <a class="small" href="/users/login">로그인 페이지</a>
                             </div>
                             <div class="text-center">
-                                <a class="small" href="">Already have an account? Login!</a>
+                                <a class="small" href="/">메인 화면</a>
                             </div>
                         </div>
                     </div>

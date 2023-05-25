@@ -57,25 +57,25 @@
                                         <div class="form-group">
                                             <div class="custom-control custom-checkbox small">
                                                 <input type="checkbox" class="custom-control-input" name="remember-me" id="remember-me">
-                                                <label class="custom-control-label" for="remember-me">Remember Me</label>
+                                                <label class="custom-control-label" for="remember-me">로그인 유지</label>
                                             </div>
                                         </div>
                                         <button class="form-control btn btn-primary btn-user btn-block">로그인</button>
                                         <hr>
                                         <a href="index.html" class="btn btn-google btn-user btn-block">
-                                            <i class="fab fa-google fa-fw"></i> Login with Google
+                                            <i class="fab fa-google fa-fw"></i> 로그인 with Google
                                         </a>
                                         <a href="index.html" class="btn btn-facebook btn-user btn-block">
-                                            <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
+                                            <i class="fab fa-facebook-f fa-fw"></i> 로그인 with Facebook
                                         </a>
                                     </form>
                                     <hr>
                                     <div class="text-center">
-                                        <a class="small" href="forgot-password.html">Forgot Password?</a>
+                                        <a class="small" href="/users/register">회원가입 페이지</a>
                                     </div>
                                     <div class="text-center">
-                                        <a class="small" href="register.html">Create an Account!</a>
-                                    </div>
+		                                <a class="small" href="/">메인 화면</a>
+		                            </div>
                                 </div>
                             </div>
                         </div>

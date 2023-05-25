@@ -46,10 +46,10 @@
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
 
-            <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
+            <!-- Nav Item - Home -->
+            <li class="nav-item">
                 <a class="nav-link" href="/">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <i class="fas fa-fw fa-home"></i>
                     <span>메인 화면</span></a>
             </li>
 
@@ -65,7 +65,7 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-fw fa-cog"></i>
+                    <i class="fas fa-fw fa-receipt"></i>
                     <span>기본 페이지</span>
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
@@ -91,7 +91,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">목록</h6>
                         <a class="collapse-item" href="/users/list">회원 목록</a>
-                        <a class="collapse-item" href="/users/canList">회원 목록</a>
+                        <a class="collapse-item" href="/users/canList">탈퇴 회원 목록</a>
                         <a class="collapse-item" href="/board/list">게시글 삭제</a>
                     </div>
                 </div>
@@ -111,14 +111,14 @@
             <!-- Nav Item - Charts -->
             <li class="nav-item">
                 <a class="nav-link" href="/map">
-                    <i class="fas fa-fw fa-chart-area"></i>
+                	<i class="fas fa-fw fa-map"></i>
                     <span>지도</span></a>
             </li>
 
             <!-- Nav Item - Tables -->
             <li class="nav-item">
                 <a class="nav-link" href="#">
-                    <i class="fas fa-fw fa-table"></i>
+                    <i class="fas fa-fw fa-chart-area"></i>
                     <span>#</span></a>
             </li>
 
@@ -203,27 +203,18 @@
                                 <sec:authentication property="principal" var="pinfo"/>
                                 <sec:authorize access="isAuthenticated()">
                                 	<span class="mr-2 d-none d-lg-inline text-gray-600 small">${pinfo.username }</span>
+	                                <img class="img-profile rounded-circle"
+	                                    src="/resources/img/undraw_profile.svg">
                                 </sec:authorize>
                                 
-                                <img class="img-profile rounded-circle"
-                                    src="/resources/img/undraw_profile.svg">
+                                <sec:authorize access="isAnonymous()">
+                                	<button type="button" class="btn btn-primary">Sign in</button>
+                                </sec:authorize>
+                                
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="/users/userInfo">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    회원 정보
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    설정
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    활동 내용
-                                </a>
-                                <div class="dropdown-divider"></div>
                                 <sec:authentication property="principal" var="pinfo"/>
                                 <sec:authorize access="isAnonymous()">
 	                                <a class="dropdown-item" href="/users/login" >
@@ -231,6 +222,19 @@
 	                                </a>
                                 </sec:authorize>
                                 <sec:authorize access="isAuthenticated()">
+	                                <a class="dropdown-item" href="/users/userInfo">
+	                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+	                                    회원 정보
+	                                </a>
+	                                <a class="dropdown-item" href="#">
+	                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+	                                    설정
+	                                </a>
+	                                <a class="dropdown-item" href="#">
+	                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+	                                    활동 내용
+	                                </a>
+	                                <div class="dropdown-divider"></div>
 	                                <button id="logout" type="button" class="dropdown-item">
 	                                   <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>로그아웃
 	                                </button>
