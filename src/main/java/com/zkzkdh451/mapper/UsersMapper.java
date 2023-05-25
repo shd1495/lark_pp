@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.zkzkdh451.domain.AuthVO;
 import com.zkzkdh451.domain.BoardVO;
+import com.zkzkdh451.domain.CanUsersVO;
 import com.zkzkdh451.domain.UsersCriteria;
 import com.zkzkdh451.domain.UsersVO;
 
@@ -21,7 +22,11 @@ public interface UsersMapper {
 	
 	public List<UsersVO> getList(UsersCriteria cri);
 	
+	public List<CanUsersVO> getCanList(UsersCriteria cri);
+	
 	public int getTotalCount(UsersCriteria cri);
+	
+	public int getCanTotalCount(UsersCriteria cri);
 	
 	public boolean authUpdate(AuthVO vo);
 	

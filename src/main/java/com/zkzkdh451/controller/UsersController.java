@@ -131,6 +131,16 @@ public class UsersController {
 		model.addAttribute("pageMaker", new UsersPageDTO(cri, total));
 	}
 	
+	@PreAuthorize("hasAuthority('ADMIN')")
+	@GetMapping("/canList")
+	public void canList(UsersCriteria cri, Model model) {
+		model.addAttribute("list", service.getCanList(cri));
+		
+		int total = service.getCanTotal(cri);
+		
+		model.addAttribute("pageMaker", new UsersPageDTO(cri, total));
+	}
+	
 	@PostMapping("/userInfoDel")
 	public String delete(UsersVO vo, RedirectAttributes rttr) {
 		if(service.remove(vo)) { 

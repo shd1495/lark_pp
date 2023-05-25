@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.zkzkdh451.domain.AuthVO;
 import com.zkzkdh451.domain.BoardVO;
+import com.zkzkdh451.domain.CanUsersVO;
 import com.zkzkdh451.domain.Criteria;
 import com.zkzkdh451.domain.UsersCriteria;
 import com.zkzkdh451.domain.UsersVO;
@@ -63,8 +64,18 @@ public class UsersServiceImpl implements UsersService {
 	}
 	
 	@Override
+	public List<CanUsersVO> getCanList(UsersCriteria cri) {
+		return mapper.getCanList(cri);
+	}
+	
+	@Override
 	public int getTotal(UsersCriteria cri) {
 		return mapper.getTotalCount(cri);
+	}
+	
+	@Override
+	public int getCanTotal(UsersCriteria cri) {
+		return mapper.getCanTotalCount(cri);
 	}
 
 	@Override

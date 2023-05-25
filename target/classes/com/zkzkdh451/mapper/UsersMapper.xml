@@ -21,32 +21,24 @@ PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
 		<result property="auth" column="auth"/>
 	</resultMap>
 
-	<sql id="usersCriteria">
-		<trim prefix="AND (" suffix=") " prefixOverrides = "OR">
-			<foreach item="type" collection="typeArr">
-				<trim prefix="OR">
-					<choose>
-						<when test="type == 'I'.toString()">
-							userid LIKE concat('%',#{keyword},'%')
-						</when>
-						<when test="type == 'N'.toString()">
-							username LIKE concat('%',#{keyword},'%')
-						</when>
-					</choose>
-				</trim>
-			</foreach>
-		</trim>	
-	</sql>
 	
 	<select id="getList" resultMap="usersMap">
 	
 		SELECT u.userid, userpw, username, nickname, useremail, regdate, updatedate, enabled, auth
 		FROM lark_users u left join lark_users_auth ua
 		on (u.userid = ua.userid)
-		
-		<include refid="usersCriteria"></include>
-		
 		ORDER BY u.userid DESC 
+		LIMIT #{start}, #{amount}
+	</select>
+	
+	<select id="getCanList" resultType="com.zkzkdh451.domain.CanUsersVO">
+	
+		SELECT *
+		FROM lark_users_can
+		<![CDATA[
+			WHERE cno > 0 
+		]]>
+		ORDER BY cno DESC 
 		LIMIT #{start}, #{amount}
 	</select>
 	
@@ -54,8 +46,12 @@ PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
 	
 		SELECT count(*)
 		FROM lark_users
-		
-		<include refid="usersCriteria"></include>
+	</select>
+	
+	<select id="getCanTotalCount" resultType="int">
+	
+		SELECT count(*)
+		FROM lark_users_can
 	</select>
 	
 	<select id="read" resultMap="usersMap">
