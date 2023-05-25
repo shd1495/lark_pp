@@ -51,6 +51,7 @@ public class BoardServiceImpl implements BoardService {
 		return mapper.getList(cri);
 	}
 	
+	@Transactional
 	@Override
 	public BoardVO get(Long bno) {
 		
@@ -64,6 +65,7 @@ public class BoardServiceImpl implements BoardService {
 		return mapper.getTotalCount(cri);
 	}
 	
+	@Transactional
 	@Override
 	public boolean modify(BoardVO vo) {
 		
@@ -83,6 +85,7 @@ public class BoardServiceImpl implements BoardService {
 		return modifyResult;
 	}
 	
+	@Transactional
 	@Override
 	public boolean remove(BoardVO vo) {
 

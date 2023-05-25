@@ -103,4 +103,9 @@ PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
 		DELETE FROM lark_users WHERE userid = #{userid}
 	</delete>
 	
+	<insert id="canUser">
+		INSERT INTO lark_users_can (userid, username, useremail)
+		VALUES (#{userid}, #{userName}, #{userEmail})
+	</insert>
+	
 </mapper>

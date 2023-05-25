@@ -24,7 +24,7 @@
 					</div>
 					<div class="input-group mb-3">
 					  <span class="input-group-text" id="inputGroup-sizing-default">이름</span>
-					  <input type="text" class="form-control" aria-label="Sizing example input" value="${user.userName }" readonly>
+					  <input type="text" class="form-control" name="userName" aria-label="Sizing example input" value="${user.userName }" readonly>
 					</div>
 					<div class="input-group mb-3">
 					  <span class="input-group-text" id="inputGroup-sizing-default">별명</span>
@@ -32,7 +32,7 @@
 					</div>
 					<div class="input-group mb-3">
 					  <span class="input-group-text" id="inputGroup-sizing-default">이메일</span>
-					  <input type="email" class="form-control" aria-label="Sizing example input" value="${user.userEmail }" readonly>
+					  <input type="email" class="form-control" name="userEmail" aria-label="Sizing example input" value="${user.userEmail }" readonly>
 					</div>
 					<div class="input-group mb-3">
 					  <span class="input-group-text" id="inputGroup-sizing-default">가입일</span>

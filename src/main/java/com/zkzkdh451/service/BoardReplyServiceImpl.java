@@ -43,7 +43,8 @@ public class BoardReplyServiceImpl implements BoardReplyService {
 		
 		return mapper.update(vo);
 	}
-
+	
+	@Transactional
 	@Override
 	public int remove(Long rno) {
 		
@@ -54,6 +55,7 @@ public class BoardReplyServiceImpl implements BoardReplyService {
 		return mapper.delete(rno);
 	}
 
+	@Transactional
 	@Override
 	public BoardReplyPageDTO getList(int start, int amount, Long bno) {
 		BoardReplyPageDTO dto 

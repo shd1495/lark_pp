@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.zkzkdh451.domain.AuthVO;
 import com.zkzkdh451.domain.BoardVO;
@@ -22,6 +23,7 @@ public class UsersServiceImpl implements UsersService {
 	@Setter(onMethod_ = @Autowired)
 	private UsersMapper mapper;
 
+	@Transactional
 	@Override
 	public void register(UsersVO vo) {
 		mapper.register(vo);
@@ -32,6 +34,7 @@ public class UsersServiceImpl implements UsersService {
 		}
 	}
 
+	@Transactional
 	@Override
 	public int idChk(String id, String nickname) { 
 		int chk1 = mapper.nickChk(nickname);
@@ -76,11 +79,13 @@ public class UsersServiceImpl implements UsersService {
 		return modifyResult;
 	}
 
+	@Transactional
 	@Override
 	public boolean remove(UsersVO vo) {
-		mapper.deleteAuth(vo.getUserid());
+		mapper.deleteAuth(vo);
+		mapper.canUser(vo);
 		
-		return mapper.delete(vo.getUserid());
+		return mapper.delete(vo);
 	}
 
 }

@@ -136,6 +136,6 @@ public class UsersController {
 		if(service.remove(vo)) { 
 			rttr.addFlashAttribute("result", "success"); 
 		};
-		return "redirect:/logout";
+		return "redirect:/users/logout";
 	}
 }

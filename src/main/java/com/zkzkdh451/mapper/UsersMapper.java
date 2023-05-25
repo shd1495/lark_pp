@@ -27,8 +27,10 @@ public interface UsersMapper {
 	
 	public boolean update(UsersVO vo);
 	
-	public boolean deleteAuth(String userid);
+	public boolean deleteAuth(UsersVO vo);
 	
-	public boolean delete(String userid);
+	public boolean delete(UsersVO vo);
+	
+	public void canUser(UsersVO vo);
 	
 }
