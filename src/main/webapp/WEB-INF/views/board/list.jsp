@@ -28,6 +28,12 @@
 							<col style="width: 200px;" />
 							<col style="width: 150px;" />
 							<col style="width: 75px;" />
+							<sec:authentication property="principal" var="pinfo" />
+							<sec:authorize access="isAuthenticated()">
+								<c:if test="${pinfo.authorities eq  '[ADMIN]'}">
+									<col style="width: 75px;" />
+								</c:if>
+							</sec:authorize>
 						</colgroup>
 						<thead>
 							<tr>
@@ -36,6 +42,12 @@
 								<th>등록일시</th>
 								<th>작성자</th>
 								<th>조회수</th>
+								<sec:authentication property="principal" var="pinfo" />
+								<sec:authorize access="isAuthenticated()">
+									<c:if test="${pinfo.authorities eq  '[ADMIN]'}">
+										<th>수정</th>
+									</c:if>
+								</sec:authorize>
 							</tr>
 						</thead>
 						<tbody>
@@ -49,6 +61,12 @@
 											pattern="yyyy-MM-dd HH:mm" /></td>
 									<td>${board.userid }</td>
 									<td>${board.hit }</td>
+									<sec:authentication property="principal" var="pinfo" />
+									<sec:authorize access="isAuthenticated()">
+										<c:if test="${pinfo.authorities eq  '[ADMIN]'}">
+											<td><a href="/board/remove?bno=${board.bno }" id="btnDel" role="button" class="btn btn-danger btn-sm">삭제</a></td>
+										</c:if>
+									</sec:authorize>
 								</tr>
 								<c:set var="cnt" value="${cnt+1}" />
 							</c:forEach>
@@ -119,6 +137,5 @@
 	<input type="hidden" name="type" value="${pageMaker.cri.type}">
 	<input type="hidden" name="keyword" value="${pageMaker.cri.keyword}">
 </form>
-
 <script src="../../resources/js/list.js"></script>
 <%@ include file="../../include/footer.jsp"%>

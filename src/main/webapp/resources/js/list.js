@@ -2,6 +2,7 @@
  * 게시판 목록 JS
  */
 $(document).ready(function() {
+	
 	//페이징에 a태그를 클릭했을때
 	$(".pagination a").on("click", function(event) {
 		event.preventDefault();
@@ -48,6 +49,15 @@ $(document).ready(function() {
 
 		$("#actionForm").submit();
 
+	});
+	
+	//관리자가 삭제 버튼 눌렀을 때
+	$("#btnDel").on("click", function(){
+		if(confirm("정말로 삭제하시겠습니까?")){
+			return true;
+		} else {
+			return false;
+		}
 	});
 
 });

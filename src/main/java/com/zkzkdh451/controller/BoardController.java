@@ -88,7 +88,7 @@ public class BoardController {
 		return "redirect:/board/list"+cri.getListLink();
 	}
 	
-	@PreAuthorize("principal.username == #board.userid")
+	@PreAuthorize("principal.username == #board.userid or hasRole('ADMIN')")
 	@PostMapping("/remove")
 	public String remove(BoardVO board, @ModelAttribute("cri") Criteria cri, 
 								RedirectAttributes rttr) {
@@ -101,6 +101,20 @@ public class BoardController {
 		};
 		
 		return "redirect:/board/list"+cri.getListLink();
+	}
+	
+	//@PreAuthorize("hasRole('ADMIN')")
+	@GetMapping("/remove")
+	public String remove(BoardVO board, RedirectAttributes rttr) {
+		
+		List<BoardAttachVO> attachList = service.getAttachList(board);
+		
+		if(service.remove(board)) { 
+			deleteFiles(attachList);
+			rttr.addFlashAttribute("result", "success"); 
+		};
+		
+		return "redirect:/board/list";
 	}
 	
 	private void deleteFiles(List<BoardAttachVO> attachList) {
