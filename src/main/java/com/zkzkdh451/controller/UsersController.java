@@ -80,16 +80,6 @@ public class UsersController {
 		return "/dashboard";
 	}
 	
-	/*
-	 * @GetMapping("/idChk")
-	 * 
-	 * @ResponseBody public String idChk(@RequestParam("userid") String userid) {
-	 * 
-	 * int result = service.idChk(userid);
-	 * 
-	 * return String.valueOf(result); }
-	 */
-	
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/logout")
 	public void logoutGET() {

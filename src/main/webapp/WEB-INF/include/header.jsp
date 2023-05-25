@@ -108,16 +108,16 @@
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="/map">
                     <i class="fas fa-fw fa-chart-area"></i>
-                    <span>어빌리티스톤</span></a>
+                    <span>지도</span></a>
             </li>
 
             <!-- Nav Item - Tables -->
             <li class="nav-item">
                 <a class="nav-link" href="#">
                     <i class="fas fa-fw fa-table"></i>
-                    <span>현재 시세</span></a>
+                    <span>#</span></a>
             </li>
 
             <!-- Divider -->
