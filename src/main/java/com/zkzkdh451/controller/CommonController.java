@@ -4,6 +4,7 @@ package com.zkzkdh451.controller;
 import java.util.Locale;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -11,16 +12,21 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * Handles requests for the application home page.
  */
 @Controller
-public class HomeController {
+public class CommonController {
 	
 	
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Locale locale) {
+	@GetMapping("/")
+	public String home() {
 		
 		return "/index";
+	}
+	
+	@GetMapping("/map")
+	public void map() {
+		
 	}
 	
 }
