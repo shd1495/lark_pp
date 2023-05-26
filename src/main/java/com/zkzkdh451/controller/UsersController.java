@@ -91,7 +91,6 @@ public class UsersController {
 	public void userInfoMod (Principal principal, ModelMap modelMap){
         String loginId = principal.getName();
         UsersVO user = service.read(loginId);
-        log.info(user.getUserid());
         modelMap.addAttribute("user", user);
 	}
 	

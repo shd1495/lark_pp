@@ -91,6 +91,11 @@ PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
 		WHERE userid = #{userid}		
 	</update>
 	
+	<update id="updatePw">
+		UPDATE lark_users SET userpw=#{userpw}, updatedate = now()
+		WHERE userid = #{userid}		
+	</update>
+	
 	<delete id="deleteAuth">
 		DELETE FROM lark_users_auth WHERE userid = #{userid}
 	</delete>

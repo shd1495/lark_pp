@@ -32,6 +32,8 @@ public interface UsersMapper {
 	
 	public boolean update(UsersVO vo);
 	
+	public boolean updatePw(UsersVO vo);
+	
 	public boolean deleteAuth(UsersVO vo);
 	
 	public boolean delete(UsersVO vo);

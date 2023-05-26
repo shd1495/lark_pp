@@ -94,6 +94,12 @@ public class UsersServiceImpl implements UsersService {
 		boolean modifyResult = mapper.update(vo);
 		return modifyResult;
 	}
+	
+	@Override
+	public boolean modifyPw(UsersVO vo) {
+		boolean modifyResult = mapper.updatePw(vo);
+		return modifyResult;
+	}
 
 	@Transactional
 	@Override

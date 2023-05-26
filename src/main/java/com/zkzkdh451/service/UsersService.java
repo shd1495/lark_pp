@@ -29,6 +29,8 @@ public interface UsersService {
 	
 	public boolean modify(UsersVO vo);
 	
+	public boolean modifyPw(UsersVO vo);
+	
 	public boolean remove(UsersVO vo);
 	
 	public boolean checkPassword(String userid, String checkPassword);
