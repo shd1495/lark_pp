@@ -3,6 +3,7 @@ package com.zkzkdh451.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,6 +14,7 @@ import com.zkzkdh451.domain.Criteria;
 import com.zkzkdh451.domain.UsersCriteria;
 import com.zkzkdh451.domain.UsersVO;
 import com.zkzkdh451.mapper.UsersMapper;
+import com.zkzkdh451.security.domain.CustomUser;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -23,6 +25,9 @@ public class UsersServiceImpl implements UsersService {
 	
 	@Setter(onMethod_ = @Autowired)
 	private UsersMapper mapper;
+	
+	@Setter(onMethod_ = @Autowired)
+	private BCryptPasswordEncoder passwordEncoder;
 
 	@Transactional
 	@Override
@@ -97,6 +102,14 @@ public class UsersServiceImpl implements UsersService {
 		mapper.canUser(vo);
 		
 		return mapper.delete(vo);
+	}
+
+	@Override
+	public boolean checkPassword(String userpw1, String userpw2) {
+		
+		boolean matches = passwordEncoder.matches(userpw1, userpw2);
+		
+		return matches;
 	}
 
 }

@@ -7,6 +7,7 @@ import com.zkzkdh451.domain.AuthVO;
 import com.zkzkdh451.domain.CanUsersVO;
 import com.zkzkdh451.domain.UsersCriteria;
 import com.zkzkdh451.domain.UsersVO;
+import com.zkzkdh451.security.domain.CustomUser;
 
 public interface UsersService {
 
@@ -29,4 +30,6 @@ public interface UsersService {
 	public boolean modify(UsersVO vo);
 	
 	public boolean remove(UsersVO vo);
+	
+	public boolean checkPassword(String userid, String checkPassword);
 }

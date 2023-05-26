@@ -148,4 +148,5 @@ public class UsersController {
 		};
 		return "redirect:/users/logout";
 	}
+	
 }
