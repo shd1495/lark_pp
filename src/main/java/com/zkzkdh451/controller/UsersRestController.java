@@ -38,7 +38,7 @@ public class UsersRestController {
 		return new ResponseEntity<String>(result, HttpStatus.OK);
 	}
 	
-	//@PreAuthorize("principal.username == userid")
+	@PreAuthorize("principal.username == #userid")
 	@GetMapping("/chkPw")
 	public String chkPw(@RequestParam("userid") String userid,
 			@RequestParam("checkPassword") String checkPassword) {
@@ -50,13 +50,11 @@ public class UsersRestController {
 		return String.valueOf(service.checkPassword(userpw1, userpw2));
 	}
 	
+	@PreAuthorize("principal.username == #userid")
 	@GetMapping("/userPwMod")
 	public String userPwMod(@RequestParam("userid") String userid,
 			@RequestParam("changePassword") String changePassword){
 		UsersVO vo = service.read(userid);
-		log.info(userid);
-		log.info(vo);
-		log.info(changePassword);
 		vo.setUserpw(passwordEncoder.encode(changePassword));
 		
 		return String.valueOf(service.modifyPw(vo));

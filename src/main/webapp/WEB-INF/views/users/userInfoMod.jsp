@@ -70,14 +70,17 @@
 				<div class="form-group">
 					<label>현재 비밀번호</label>
 					<input type="password" class="form-control" name="password1" id="password1" >
+					<span class="msg"></span>
 				</div>
 				<div class="form-group">
 					<label>새 비밀번호</label>
 					<input type="password" class="form-control" name="password2" id="password2" >
+					<span class="msg2"></span>
 				</div>
 				<div class="form-group">
 					<label>새 비밀번호 확인</label>
 					<input type="password" class="form-control" name="password3" id="password3" >
+					<span class="msg3"></span>
 				</div>
 			</div>
 			<div class="modal-footer">
@@ -111,7 +114,50 @@ $(document).ready(function(){
 	var modalInputPassword2 = $('#password2');
 	var modalInputPassword3 = $('#password3');
 	
+	$('#password1').on("keyup", function(){
+		if($(this).val().length < 6 || $(this).val().length > 12){
+			$('.msg').html("6~12자 사이로 입력해주세요.");
+			$('.msg').css("color", "#f00").css("z-index",1);
+		} else {
+			let regPass = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{6,12}$/;
+			if (!regPass.test($(this).val())) {
+				$('.msg').html("영문자 숫자 특수문자를 포함해주세요.");
+				$('.msg').css("color", "#f00").css("z-index",1);
+			} else {
+				$('.msg').html("");
+			}
+		}
+	});
 	
+	$('#password2').on("keyup", function(){
+		if($(this).val().length < 6 || $(this).val().length > 12){
+			$('.msg2').html("6~12자 사이로 입력해주세요.");
+			$('.msg2').css("color", "#f00").css("z-index",1);
+		} else {
+			let regPass = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{6,12}$/;
+			if (!regPass.test($(this).val())) {
+				$('.msg2').html("영문자 숫자 특수문자를 포함해주세요.");
+				$('.msg2').css("color", "#f00").css("z-index",1);
+			} else {
+				$('.msg2').html("");
+			}
+		}
+	});
+	
+	$('#password3').on("keyup", function(){
+		if($(this).val().length < 6 || $(this).val().length > 12){
+			$('.msg3').html("6~12자 사이로 입력해주세요.");
+			$('.msg3').css("color", "#f00").css("z-index",1);
+		} else {
+			let regPass = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{6,12}$/;
+			if (!regPass.test($(this).val())) {
+				$('.msg3').html("영문자 숫자 특수문자를 포함해주세요.");
+				$('.msg3').css("color", "#f00").css("z-index",1);
+			} else {
+				$('.msg3').html("");
+			}
+		}
+	});
 	
 	var modalModBtn = $("#modalModBtn");
 	
@@ -133,46 +179,70 @@ $(document).ready(function(){
 		console.log(checkPassword1);
 		console.log(checkPassword2);
 		console.log(checkPassword3);
+		let regPass = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{6,12}$/;
+		if($('#password1').val() == '' || $('#password1').val().length < 6
+				|| $('#password1').val().length > 12  || !regPass.test($('#password1').val()) == true){
+			alert("양식에 맞는 비밀번호를 입력해주세요.");
+			$('#password1').focus();
+			return;
+		}
+		if($('#password2').val() == '' || $('#password2').val().length < 6
+				|| $('#password2').val().length > 12  || !regPass.test($('#password2').val()) == true){
+			alert("양식에 맞는 비밀번호를 입력해주세요.");
+			$('#password2').focus();
+			return;
+		}
+		if($('#password3').val() == '' || $('#password3').val().length < 6
+				|| $('#password3').val().length > 12  || !regPass.test($('#password3').val()) == true){
+			alert("양식에 맞는 비밀번호를 입력해주세요.");
+			$('#password3').focus();
+			return;
+		}
 		 $.ajax({
              type: 'GET',
              url: '/users/chkPw',
              data: {'userid' : userid ,'checkPassword': checkPassword1},
-             datatype: "JSON"
-         }).done(function(result){
-             if(result == "true"){
-                 console.log("비밀번호 일치");
-                 chk = 1;
-             } else {
-                 console.log("비밀번호 틀림");
-                 // 비밀번호가 일치하지 않으면
-                 alert("비밀번호가 맞지 않습니다.");
-                 chk = 0;
+             datatype: "JSON",
+             success:function(result){
+            	 if(result == "true"){
+                     console.log("비밀번호 일치");
+                     chk = 1;
+                 } else {
+                     console.log("비밀번호 틀림");
+                     // 비밀번호가 일치하지 않으면
+                     chk = 0;
+                 }
              }
+         }).done(function(){
+        	 if(!checkPassword1 || checkPassword1.trim() === "" || !checkPassword2 || checkPassword2.trim() === "" 
+         		|| !checkPassword3 || checkPassword3.trim() === "" ){
+		             alert("비밀번호를 입력하세요.");
+		     } else if(checkPassword1 == checkPassword2) {
+		     	alert("변경할 비밀번호가 현재 비밀번호와 같습니다.");
+		        return;
+		 	 } else if(checkPassword2 == checkPassword3 && chk == 1){
+		        if(confirm("정말로 수정하시겠습니까?")){
+		        	$.ajax({
+	   	            	type: 'GET',
+	   	                url: '/users/userPwMod',
+	   	                contentType: 'application/json; charset=utf-8',
+	   	                data: {'userid' : userid ,'changePassword' : checkPassword2},
+	   	                datatype: "JSON"
+	   	            }).done(function(result){
+	   	            	console.log(result);
+	   	                if(result == "true"){
+	   	                    alert("비밀번호 변경이 완료되었습니다.");
+	   	                    window.location.href="/users/userInfo";
+	   	                } else{
+	   	                    alert("비밀번호 변경에 실패했습니다");
+	   	                }
+	   	            }); 
+		   		}
+			} else {
+		    	alert("비밀번호가 틀립니다.");
+			}
          });
-        if(!checkPassword1 || checkPassword1.trim() === "" || !checkPassword2 || checkPassword2.trim() === "" 
-        		|| !checkPassword3 || checkPassword3.trim() === "" ){
-            alert("비밀번호를 입력하세요.");
-        } else if(checkPassword2 == checkPassword3){
-        	if(confirm("정말로 수정하시겠습니까?")){
-  			  $.ajax({
-  	                type: 'GET',
-  	                url: '/users/userPwMod',
-  	                contentType: 'application/json; charset=utf-8',
-  	                data: {'userid' : userid ,'changePassword' : checkPassword2},
-  	                datatype: "JSON"
-  	            }).done(function(result){
-  	            	console.log(result);
-  	                if(result == "true"){
-  	                    alert("비밀번호 변경이 완료되었습니다.");
-  	                    window.location.href="/users/userInfo";
-  	                } else{
-  	                    alert("비밀번호 변경에 실패했습니다");
-  	                }
-  	            }); 
-  		}
-        } else {
-        	alert("비밀번호가 틀립니다.");
-        }
+        
 	});
 	
 	$("#btnSubmit").on("click", function(e){
