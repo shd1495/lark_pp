@@ -21,6 +21,7 @@
 
     <!-- Custom styles for this template-->
     <link href="/resources/css/sb-admin-2.min.css" rel="stylesheet">
+    <script src="../resources/vendor/jquery/jquery.js"></script>
 
 </head>
 
@@ -43,8 +44,9 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">로그인</h1>
                                     </div>
-                                    <form class="user" method="post" action="/login">
+                                    <form id="form" class="user" method="post" action="/login">
                                     <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }" />
+                                    <input type="hidden" id="nickname" name="nickname" value="1" />
                                         <div class="form-group">
                                             <input type="text" class="form-control form-control-user"
                                                 id="userid" name="username" aria-describedby="emailHelp"
@@ -60,7 +62,7 @@
                                                 <label class="custom-control-label" for="remember-me">로그인 유지</label>
                                             </div>
                                         </div>
-                                        <button class="form-control btn btn-primary btn-user btn-block">로그인</button>
+                                        <button id="btnSubmit" class="form-control btn btn-primary btn-user btn-block">로그인</button>
                                         <hr>
                                         <a href="index.html" class="btn btn-google btn-user btn-block">
                                             <i class="fab fa-google fa-fw"></i> 로그인 with Google
@@ -98,6 +100,53 @@
     <!-- Custom scripts for all pages-->
     <script src="/resources/js/sb-admin-2.min.js"></script>
 
+<script>
+$(document).ready(function(){
+	let chk = 0;
+	$('#btnSubmit').on('click', function(event){
+		event.preventDefault();
+		let userid = $("#userid").val();
+		let nickname = $("#nickname").val();
+		let checkPassword = $("#userpw").val();
+		$.ajax({
+			url:'/users/idChk',
+			type:'get',
+			contentType: 'application/JSON; charset=utf-8',
+			data: {userid : userid, nickname : nickname},
+			dataType:'JSON',
+			success:function(result){
+				if(result == "1" || result == "2"){
+					console.log(result);
+					chk = 1;
+				} else {
+ 					alert("아이디 또는 비밀번호를 확인하세요.");
+					console.log(result);
+					chk = 0;
+				}
+			}
+		}).done(function(){
+			if(chk == 1){
+				$.ajax({
+   	            	type: 'GET',
+   	                url: '/users/chkPw',
+   	                contentType: 'application/json; charset=utf-8',
+   	                data: {'userid' : userid ,'checkPassword' : checkPassword},
+   	                datatype: "JSON",
+                	success:function(result){
+	     				if(result == "true"){
+	    					console.log(result);
+	     					$("#form").submit();
+	     				} else {
+	    					console.log(result);
+	     					alert("아이디 또는 비밀번호를 확인하세요.");
+	     				}
+   	     			}
+   	            });
+			}
+		});
+	});
+});
+</script>
 </body>
 
 </html>

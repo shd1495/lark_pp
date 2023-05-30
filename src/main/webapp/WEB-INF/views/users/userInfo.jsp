@@ -104,14 +104,29 @@ $(document).ready(function(){
 	var modalInputUserid = $('#userid');
 	var modalInputPassword = $('#password');
 	
-	
 	var modalModBtn = $("#modalModBtn");
+	
+	var mod = 0;
+	var can = 0;
 	
 	$("#btnMod").on("click", function(e){
 		e.preventDefault();
 
 		modalInputUserid.val("${user.userid}");
 		modalInputPassword.val('');
+		mod = 1;
+		can = 0;
+		
+		modal.modal("show");
+	});
+	
+	$("#btnCan").on("click", function(e){
+		e.preventDefault();
+		
+		modalInputUserid.val("${user.userid}");
+		modalInputPassword.val('');
+		mod = 0;
+		can = 1;
 		
 		modal.modal("show");
 	});
@@ -131,10 +146,14 @@ $(document).ready(function(){
                 datatype: "JSON"
             }).done(function(result){
                 if(result == "true"){
-                    console.log("비밀번호 일치");
-                    window.location.href="/users/userInfoMod";
+                	if(mod == 1){
+                        window.location.href="/users/userInfoMod";
+                	} else if (can == 1) {
+                		if(confirm("정말로 탈퇴하시겠습니까?")){
+                    		$("#form").submit();
+                		}
+                	}
                 } else {
-                    console.log("비밀번호 틀림");
                     // 비밀번호가 일치하지 않으면
                     alert("비밀번호가 맞지 않습니다.");
                 }
@@ -143,12 +162,7 @@ $(document).ready(function(){
 	});
 	
 	
-	$("#btnCan").on("click", function(e){
-		e.preventDefault();
-		if(confirm("정말 탈퇴하시겠습니까?")){
-			$("#form").submit();
-		}
-	});
+	
 });
 </script>
 <%@ include file="../../include/footer.jsp"%>

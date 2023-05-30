@@ -38,7 +38,6 @@ public class UsersRestController {
 		return new ResponseEntity<String>(result, HttpStatus.OK);
 	}
 	
-	@PreAuthorize("principal.username == #userid")
 	@GetMapping("/chkPw")
 	public String chkPw(@RequestParam("userid") String userid,
 			@RequestParam("checkPassword") String checkPassword) {
