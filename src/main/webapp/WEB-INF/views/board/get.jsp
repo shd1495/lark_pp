@@ -357,19 +357,23 @@ $(document).ready(function() {
 				replyer:modalInputReplyer.val(),
 				bno:bnoValue
 		};
-		
-		replyService.add(
-				reply,
-				function(result){
+		if(!(modalInputReply.val() == '' || modalInputReply.val() == null)){
+			replyService.add(
+					reply,
+					function(result){
 
-					modalInputReply.val('');
-					modalInputReplyer.val('');
-					modalInputReplyDate.val('');	
-					
-					modal.modal("hide");
-					
-					showList(-1);
-				});
+						modalInputReply.val('');
+						modalInputReplyer.val('');
+						modalInputReplyDate.val('');	
+						
+						modal.modal("hide");
+						
+						showList(-1);
+					});
+		} else {
+			alert("댓글 내용을 입력해주세요.");
+		}
+		
 	});
 	
 	//관리 버튼 클릭시 모달 출력
@@ -418,19 +422,22 @@ $(document).ready(function() {
 				replyer:originalReplyer,
 				rno:rno
 		};
-		
-		replyService.update(
-				reply,
-				function(result){
-
-					modalInputReply.val('');
-					modalInputReplyer.val('');
-					modalInputReplyDate.val('');	
-					
-					modal.modal("hide");
-					
-					showList(pageNum);
-				});
+		if(!(modalInputReply.val() == '' || modalInputReply.val() == null)){
+			replyService.update(
+					reply,
+					function(result){
+	
+						modalInputReply.val('');
+						modalInputReplyer.val('');
+						modalInputReplyDate.val('');	
+						
+						modal.modal("hide");
+						
+						showList(pageNum);
+					});
+		} else {
+			alert("댓글 내용을 입력해주세요.");
+		}
 	});
 	
 modalRemoveBtn.on("click", function(){
